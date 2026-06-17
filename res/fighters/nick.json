@@ -26,6 +26,6 @@
     "abilities": [
         "punch"
     ],
-    "dodge_if": "self.hp < 50",
+    "dodge_if": "defender.hp < 50",
     "choose_ability_func": "nick_choose.py"
 }

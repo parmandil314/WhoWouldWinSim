@@ -4,17 +4,7 @@ import re
 import skills
 
 
-def roll(notation):
-    match = re.match(r'(\d+)d(\d+)(\+?(\d+)?)', notation)
-    if not match:
-        raise ValueError("Invalid dice notation")
-
-    num_dice = int(match.group(1))
-    sides = int(match.group(2))
-    try:
-        modifier = int(match.group(3))
-    except ValueError:
-        modifier = 0
+def roll(num_dice: int, sides: int, modifier: int = 0):
 
     return sum(random.randint(1, sides) for _ in range(num_dice)) + modifier
 
@@ -23,4 +13,15 @@ def roll(notation):
 Skill roll, attack roll, etc.
 """
 def general_roll(fighter, skill):
-    return roll(f"1d100+{fighter.skills[skill] if skill in fighter.skills.keys() else skills.DEFAULT_SKILLS[skill]}")
+    result = roll(1, 100)
+    skill_val = fighter.skills[skill] if skill in fighter.skills.keys() else skills.DEFAULT_SKILLS[skill]
+
+    success = 0
+    if result <= skill_val:
+        success = 1
+    elif result <= skill_val // 2:
+        success = 2
+    elif result <= skill_val // 5:
+        success = 3
+    
+    return success

@@ -8,7 +8,7 @@ class Limb:
         self.hp = max_hp
 
 
-def default_choose_ability(self, target) -> str:
+def default_choose_ability(attacker, target) -> str:
     return "none"
 
 
