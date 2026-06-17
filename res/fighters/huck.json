@@ -1,0 +1,32 @@
+{
+    "name": "Huck",
+    "is_character": true,
+    "hp": 90,
+    "limbs": [
+        {"name": "Head", "hp": 45 },
+        {"name": "Torso", "hp": 95 },
+        {"name": "Left Arm", "hp": 70 },
+        {"name": "Right Arm", "hp": 70 },
+        {"name": "Left Leg", "hp": 70 },
+        {"name": "Right Leg", "hp": 70 }
+    ],
+    "size": "small",
+    "armor": 1.0,
+    "attributes": {
+        "STR": 45,
+        "DEX": 65,
+        "CON": 55,
+        "EDU": 25,
+        "INT": 60,
+        "POW": 60
+    },
+    "skills": {
+        "brawl": 30,
+        "dodge": 45
+    },
+    "abilities": [
+        "punch"
+    ],
+    "dodge_if": "self.hp < 80",
+    "choose_ability_func": "huck_choose.py"
+}

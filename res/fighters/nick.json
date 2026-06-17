@@ -1,0 +1,31 @@
+{
+    "name": "Nick",
+    "is_character": true,
+    "hp": 100,
+    "limbs": [
+        {"name": "Head", "hp": 50 },
+        {"name": "Torso", "hp": 100 },
+        {"name": "Left Arm", "hp": 75 },
+        {"name": "Right Arm", "hp": 75 },
+        {"name": "Left Leg", "hp": 75 },
+        {"name": "Right Leg", "hp": 75 }
+    ],
+    "size": "medium",
+    "armor": 1.0,
+    "attributes": {
+        "STR": 50,
+        "DEX": 50,
+        "CON": 50,
+        "EDU": 65,
+        "INT": 50,
+        "POW": 45
+    },
+    "skills": {
+        "dodge": 25
+    },
+    "abilities": [
+        "punch"
+    ],
+    "dodge_if": "self.hp < 50",
+    "choose_ability_func": "nick_choose.py"
+}
