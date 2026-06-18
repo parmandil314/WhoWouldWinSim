@@ -59,7 +59,8 @@ class Scene:
 
             tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
             console = tcod.console.Console(80, 50)
-            context = tcod.context.new(columns=console.width, rows=console.height, tileset=tileset)
+            context = tcod.context.new(title=f"Who Would Win: {self.fighter_a.name} vs. {self.fighter_b.name}", 
+                                       columns=console.width, rows=console.height, tileset=tileset)
         
             import fighter
 
@@ -69,9 +70,12 @@ class Scene:
                 self.arena.draw(self.fighter_a, self.fighter_b, console)
                 context.present(
                     console, 
-                    keep_aspect=True,       # Adds letterboxing if window dimensions don't match console ratio
-                    integer_scaling=True    # Forces exact pixel multipliers to prevent subpixel distortion
+                    keep_aspect=True,
+                    integer_scaling=True,
+                    align=(0, 0)
                 )
+
+                tcod.event.wait()
 
                 if a_turn:
                     fighter.attacker_take_turn(self.fighter_a, self.fighter_b)
