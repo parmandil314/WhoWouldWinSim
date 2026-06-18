@@ -1,7 +1,9 @@
 import fighter
+from arena import Arena
 import dice
 
-def execute(attacker: fighter.Fighter, defender: fighter.Fighter):
+def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
+    
     attacker_roll = dice.general_roll(attacker, "brawl")
     
     

@@ -84,9 +84,9 @@ class Scene:
                 tcod.event.wait()
 
                 if a_turn:
-                    fighter.attacker_take_turn(self.fighter_a, self.fighter_b)
+                    fighter.attacker_take_turn(self.arena, self.fighter_a, self.fighter_b)
                 else:
-                    fighter.attacker_take_turn(self.fighter_b, self.fighter_a)
+                    fighter.attacker_take_turn(self.arena, self.fighter_b, self.fighter_a)
                 a_turn = not a_turn
 
 

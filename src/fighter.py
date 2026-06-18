@@ -51,14 +51,14 @@ class Fighter:
 
 
 
-def attacker_take_turn(attacker, opponent):
+def attacker_take_turn(arena, attacker, opponent):
 
-    attacker_use_ability(attacker, attacker.choose_ability(attacker, opponent), opponent)
+    attacker_use_ability(arena, attacker, attacker.choose_ability(attacker, opponent), opponent)
 
 
-def attacker_use_ability(attacker, name: str, target):
+def attacker_use_ability(arena, attacker, name: str, target):
 
     try:
-        attacker.abilities[name](attacker, target)
+        attacker.abilities[name](arena, attacker, target)
     except Exception as e:
         print(f"{e}")
