@@ -3,8 +3,9 @@ import tcod
 
 
 class Tile:
-    def __init__(self, name: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], walk_cost: float) -> None:
+    def __init__(self, name: str, filename: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], walk_cost: float) -> None:
         self.name = name
+        self.filename = filename
         self.char = char
         self.fg = fg
         self.bg = bg
@@ -48,5 +49,26 @@ class Arena:
         console.ch[a_y][a_x] = ord(fighter_a.char)
         
         b_x, b_y = fighter_b.pos
-        console.fg[b_y][b_x] = (0, 0, 0)
+        console.fg[b_y][b_x] = (255, 0, 0)
         console.ch[b_y][b_x] = ord(fighter_b.char)
+
+
+    def remove_tile_at(self, x, y):
+        self.tiles[y][x] = 0
+
+
+    def change_tile_at(self, x, y, name):
+        for i, tile_type in enumerate(self.tile_types):
+            if tile_type.filename == name:
+                self.tiles[y][x] = i
+                break
+
+
+    def tile_name_at(self, x, y):
+        tile = self.tiles[y][x]
+        return self.tile_types[tile].name
+
+
+    def tile_char_at(self, x, y):
+        tile = self.tiles[y][x]
+        return (ord(self.tile_types[tile].char), self.tile_types[tile].fg)

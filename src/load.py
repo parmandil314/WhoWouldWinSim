@@ -1,6 +1,7 @@
 import json
 import os
 import copy
+import numpy as np
 
 import skills
 import fighter
@@ -13,19 +14,19 @@ def load_tiles():
     for entry in os.listdir("res/tiles"):
         if entry.endswith(".json"):
             with open(f"res/tiles/{entry}", "r") as f:
-                tile = load_tile(f.read())
+                tile = load_tile(entry.removesuffix(".json"), f.read())
                 if tile is not None:
                     tiles.append(tile)
     return tiles
 
 
-def load_tile(json_text: str):
+def load_tile(filename: str, json_text: str):
     json_dict = json.loads(json_text)
 
     import arena
 
     try:
-        return arena.Tile(json_dict["name"], json_dict["char"], json_dict["fg"], json_dict["bg"], json_dict["walk_cost"])
+        return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], json_dict["walk_cost"])
     except:
         return None
 
@@ -57,6 +58,9 @@ def load_arena(filename: str) -> arena.Arena:
         if b_start:
             new_arena.b_start = tuple(b_start)
         
+        tiles: list[int] = json_dict["tiles"]
+        new_arena.tiles = np.reshape(tiles, (new_arena.width, new_arena.height))
+
         return new_arena
 
 

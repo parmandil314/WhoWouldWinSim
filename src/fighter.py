@@ -31,7 +31,7 @@ class Fighter:
         self.choose_ability = default_choose_ability
         self.skills: dict[str, int] = {}
         self.attributes: dict[str, int] = {}
-        self.dodge_if: str = "self.hp < 50"
+        self.dodge_if: str = "defender.hp < 50"
 
 
     def take_damage(self, damage: int, print_effects=True):

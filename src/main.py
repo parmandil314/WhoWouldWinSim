@@ -66,7 +66,7 @@ class Scene:
             tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
             console = tcod.console.Console(80, 50)
             context = tcod.context.new(title=f"Who Would Win: {self.fighter_a.name} vs. {self.fighter_b.name}", 
-                                       columns=console.width, rows=console.height, tileset=tileset)
+                                       columns=console.width, rows=console.height, tileset=tileset, sdl_window_flags=tcod.context.SDL_WINDOW_FULLSCREEN)
         
             import fighter
 
