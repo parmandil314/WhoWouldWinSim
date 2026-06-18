@@ -1,5 +1,6 @@
 {
     "name": "Nick",
+    "char": "N",
     "is_character": true,
     "hp": 100,
     "limbs": [

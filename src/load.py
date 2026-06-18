@@ -6,6 +6,55 @@ import skills
 import fighter
 import dice
 
+
+def load_tiles():
+    tiles = []
+    for entry in os.listdir("res/tiles"):
+        if entry.endswith(".json"):
+            with open(f"res/tiles/{entry}", "r") as f:
+                tile = load_tile(f.read())
+                if tile is not None:
+                    tiles.append(tile)
+    return tiles
+
+
+def load_tile(json_text: str):
+    json_dict = json.loads(json_text)
+
+    import arena
+
+    try:
+        return arena.Tile(json_dict["name"], json_dict["char"], json_dict["fg"], json_dict["bg"], json_dict["walk_cost"])
+    except:
+        return None
+
+
+def load_arena_names() -> dict[str, str]:
+
+    names_dict = {}
+    for entry in os.listdir("res/arenas"):
+        if entry.endswith(".json"):
+            with open(f"res/arenas/{entry}", "r") as f:
+                json_dict = json.load(f)
+                try:
+                    names_dict[json_dict["name"]] = f"res/arenas/{entry}"
+                except:
+                    continue
+    return names_dict
+
+
+def load_arena(filename: str):
+    import arena
+    if filename.endswith(".json"):
+        with open(filename, "r") as f:
+            json_dict = json.load(f)
+            try:
+                new_arena = arena.Arena(json_dict["name"], json_dict["width"], json_dict["height"])
+                return new_arena
+            except:
+                return None
+
+
 def load_abilities():
     abilities = {}
 
@@ -63,6 +112,11 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
     """
 
     try:
+        
+        char = json_dict.get("char")
+        if char:
+            new_fighter.char = char
+        
         new_fighter.hp = json_dict["hp"]
         new_fighter.armor = json_dict["armor"]
         new_fighter.dodge_if = json_dict["dodge_if"]

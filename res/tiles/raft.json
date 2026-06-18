@@ -1,0 +1,7 @@
+{
+    "name": "Section of Raft",
+    "char": "#",
+    "fg": [255, 255, 255],
+    "bg": [0, 0, 100],
+    "walk_cost": 0.75
+}
