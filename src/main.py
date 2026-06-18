@@ -1,9 +1,9 @@
 import tcod
-import arena
 
 
 class Scene:
 
+    import arena
     def __init__(self) -> None:
 
         import load
@@ -52,8 +52,14 @@ class Scene:
             except:
                 continue
         self.arena = a
+        
+        self.fighter_a.pos = self.arena.a_start
+        self.fighter_b.pos = self.arena.b_start
     
+
     def fight(self):
+        
+        import arena
 
         if isinstance(self.arena, arena.Arena):
 

@@ -19,8 +19,7 @@ class Fighter:
         self.char = name[0]
         self.is_character = is_character
 
-        self.x = 0
-        self.y = 0
+        self.pos: tuple[int, int] = (0, 0)
 
         self.hp = 100
         self.max_hp = 100

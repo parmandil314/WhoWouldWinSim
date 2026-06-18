@@ -1,8 +1,6 @@
 import numpy as np
 import tcod
 
-import load
-
 
 class Tile:
     def __init__(self, name: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], walk_cost: float) -> None:
@@ -16,7 +14,12 @@ class Tile:
 class Arena:
     def __init__(self, name: str, width: int, height: int) -> None:
 
+        import load
+
         self.name = name
+
+        self.a_start: tuple[int, int] = (0, 0)
+        self.b_start: tuple[int, int] = (width - 1, height - 1)
 
         if 4 < width < 20:
             self.width = width
@@ -40,8 +43,10 @@ class Arena:
             console.bg[y][x] = tile_type.bg
             console.ch[y][x] = ord(tile_type.char)
         
-        console.fg[fighter_a.y][fighter_a.x] = (0, 0, 255)
-        console.ch[fighter_a.y][fighter_a.x] = ord(fighter_a.char)
+        a_x, a_y = fighter_a.pos
+        console.fg[a_y][a_x] = (0, 0, 255)
+        console.ch[a_y][a_x] = ord(fighter_a.char)
         
-        console.fg[fighter_b.y][fighter_b.x] = (0, 0, 0)
-        console.ch[fighter_b.y][fighter_b.x] = ord(fighter_b.char)
+        b_x, b_y = fighter_b.pos
+        console.fg[b_y][b_x] = (0, 0, 0)
+        console.ch[b_y][b_x] = ord(fighter_b.char)

@@ -5,6 +5,7 @@ import copy
 import skills
 import fighter
 import dice
+import arena
 
 
 def load_tiles():
@@ -43,16 +44,20 @@ def load_arena_names() -> dict[str, str]:
     return names_dict
 
 
-def load_arena(filename: str):
-    import arena
-    if filename.endswith(".json"):
-        with open(filename, "r") as f:
-            json_dict = json.load(f)
-            try:
-                new_arena = arena.Arena(json_dict["name"], json_dict["width"], json_dict["height"])
-                return new_arena
-            except:
-                return None
+def load_arena(filename: str) -> arena.Arena:
+    with open(filename, "r") as f:
+        json_dict: dict = json.load(f)
+        new_arena = arena.Arena(json_dict["name"], json_dict["width"], json_dict["height"])
+        
+        a_start = json_dict.get("a_start")
+        if a_start:
+            new_arena.a_start = tuple(a_start)
+        
+        b_start = json_dict.get("b_start")
+        if b_start:
+            new_arena.b_start = tuple(b_start)
+        
+        return new_arena
 
 
 def load_abilities():

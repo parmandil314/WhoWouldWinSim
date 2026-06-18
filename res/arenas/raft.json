@@ -1,5 +1,7 @@
 {
     "name": "Huck and Jim's Raft",
     "width": 8,
-    "height": 8
+    "height": 8,
+    "a_start": [0, 0],
+    "b_start": [7, 7]
 }
