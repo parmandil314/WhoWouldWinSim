@@ -3,14 +3,6 @@
     "char": "H",
     "is_character": true,
     "hp": 90,
-    "limbs": [
-        {"name": "Head", "hp": 45 },
-        {"name": "Torso", "hp": 95 },
-        {"name": "Left Arm", "hp": 70 },
-        {"name": "Right Arm", "hp": 70 },
-        {"name": "Left Leg", "hp": 70 },
-        {"name": "Right Leg", "hp": 70 }
-    ],
     "size": "small",
     "armor": 1.0,
     "attributes": {
@@ -26,7 +18,7 @@
         "dodge": 45
     },
     "abilities": [
-        "punch"
+        "punch", "move"
     ],
     "dodge_if": "defender.hp < 80",
     "choose_ability_func": "huck_choose.py"

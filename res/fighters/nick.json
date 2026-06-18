@@ -3,14 +3,6 @@
     "char": "N",
     "is_character": true,
     "hp": 100,
-    "limbs": [
-        {"name": "Head", "hp": 50 },
-        {"name": "Torso", "hp": 100 },
-        {"name": "Left Arm", "hp": 75 },
-        {"name": "Right Arm", "hp": 75 },
-        {"name": "Left Leg", "hp": 75 },
-        {"name": "Right Leg", "hp": 75 }
-    ],
     "size": "medium",
     "armor": 1.0,
     "attributes": {
@@ -25,7 +17,7 @@
         "dodge": 25
     },
     "abilities": [
-        "punch"
+        "punch", "move"
     ],
     "dodge_if": "defender.hp < 50",
     "choose_ability_func": "nick_choose.py"

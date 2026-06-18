@@ -1,4 +1,5 @@
 import tcod
+import time
 
 
 class Scene:
@@ -88,6 +89,8 @@ class Scene:
                 else:
                     fighter.attacker_take_turn(self.arena, self.fighter_b, self.fighter_a)
                 a_turn = not a_turn
+
+                time.sleep(0.5)
 
 
 if __name__ == "__main__":

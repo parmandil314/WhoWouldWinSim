@@ -3,10 +3,21 @@ import os
 import copy
 import numpy as np
 
+import tcod
+
 import skills
 import fighter
 import dice
 import arena
+
+
+globals_dict = {
+    "numpy": np,
+    "tcod": tcod,
+    "dice": dice,
+    "fighter": fighter,
+    "arena": arena
+}
 
 
 def load_tiles():
@@ -81,7 +92,7 @@ def load_ability(python_text: str):
 
     local_namespace = {}
     try:
-        exec(python_text, {"dice": dice, "fighter": fighter}, local_namespace)
+        exec(python_text, globals_dict, local_namespace)
         return local_namespace["execute"]
     except:
         return None
@@ -136,7 +147,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         with open(f"res/fighters/{json_dict["choose_ability_func"]}", "r") as f:
             local_namespace = {}
             try:
-                exec(f.read(), {}, local_namespace)
+                exec(f.read(), globals_dict, local_namespace)
                 new_fighter.choose_ability = local_namespace["choose_ability"]
             except:
                 return None

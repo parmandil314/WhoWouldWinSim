@@ -1,5 +1,10 @@
 import fighter
+from arena import Arena
 
-def choose_ability(me: fighter.Fighter, target: fighter.Fighter):
+import tcod
 
+def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter):
+
+    if len(tcod.los.bresenham(self.pos, target.pos)) > 2:
+        return "move"
     return "punch"

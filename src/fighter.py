@@ -48,12 +48,15 @@ class Fighter:
         else:
             self.is_alive = False
             print(f"{self.name} loses!")
+    
+    def move(self, dx, dy):
+        self.pos = (self.pos[0] + dx, self.pos[1] + dy)
 
 
 
 def attacker_take_turn(arena, attacker, opponent):
 
-    attacker_use_ability(arena, attacker, attacker.choose_ability(attacker, opponent), opponent)
+    attacker_use_ability(arena, attacker, attacker.choose_ability(arena, attacker, opponent), opponent)
 
 
 def attacker_use_ability(arena, attacker, name: str, target):

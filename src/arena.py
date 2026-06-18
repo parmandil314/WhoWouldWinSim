@@ -53,6 +53,14 @@ class Arena:
         console.ch[b_y][b_x] = ord(fighter_b.char)
 
 
+    def is_walkable(self, x, y):
+        return self.tile_type(x, y).walk_cost > 0
+
+
+    def tile_type(self, x, y):
+        return self.tile_types[self.tiles[y][x]]
+
+
     def remove_tile_at(self, x, y):
         self.tiles[y][x] = 0
 
