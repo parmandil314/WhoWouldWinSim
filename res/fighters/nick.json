@@ -4,6 +4,7 @@
     "is_character": true,
     "hp": 100,
     "size": "medium",
+    "speed": 1,
     "armor": 1.0,
     "attributes": {
         "STR": 50,

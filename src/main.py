@@ -52,45 +52,56 @@ class Scene:
                 break
             except:
                 continue
-        self.arena = a
+        self.fighter_arena = a
         
-        self.fighter_a.pos = self.arena.a_start
-        self.fighter_b.pos = self.arena.b_start
+        self.fighter_a.pos = self.fighter_arena.a_start
+        self.fighter_b.pos = self.fighter_arena.b_start
     
+
+    def draw(self, context: tcod.context.Context, console: tcod.console.Console):
+        self.fighter_arena.draw(self.fighter_a, self.fighter_b, console)
+        context.present(
+            console, 
+            keep_aspect=True,
+            integer_scaling=True,
+            align=(0, 0)
+        )
+
+        for event in tcod.event.wait():
+            if isinstance(event, tcod.event.Quit):
+                raise SystemExit
+
 
     def fight(self):
         
         import arena
 
-        if isinstance(self.arena, arena.Arena):
+        if isinstance(self.fighter_arena, arena.Arena):
 
             tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
             console = tcod.console.Console(80, 50)
-            context = tcod.context.new(title=f"Who Would Win: {self.fighter_a.name} vs. {self.fighter_b.name}", 
-                                       columns=console.width, rows=console.height, tileset=tileset, sdl_window_flags=tcod.context.SDL_WINDOW_FULLSCREEN)
+            context = tcod.context.new(title=f"Who Would Win: {self.fighter_a.name} vs. {self.fighter_b.name}",
+                                       columns=console.width, rows=console.height, tileset=tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
         
             import fighter
 
-            a_turn = True
             while self.fighter_a.is_alive and self.fighter_b.is_alive:
 
-                self.arena.draw(self.fighter_a, self.fighter_b, console)
-                context.present(
-                    console, 
-                    keep_aspect=True,
-                    integer_scaling=True,
-                    align=(0, 0)
-                )
-
-                tcod.event.wait()
-
-                if a_turn:
-                    fighter.attacker_take_turn(self.arena, self.fighter_a, self.fighter_b)
-                else:
-                    fighter.attacker_take_turn(self.arena, self.fighter_b, self.fighter_a)
-                a_turn = not a_turn
-
-                time.sleep(0.5)
+                a_turn = True
+                while a_turn:
+                    self.draw(context, console)
+                    fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
+                    self.fighter_b.regain_energy()
+                    a_turn = self.fighter_a.energy > 0
+                    time.sleep(0.25)
+                
+                b_turn = True
+                while b_turn:
+                    self.draw(context, console)
+                    fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
+                    self.fighter_a.regain_energy()
+                    b_turn = self.fighter_b.energy > 0
+                    time.sleep(0.25)
 
 
 if __name__ == "__main__":

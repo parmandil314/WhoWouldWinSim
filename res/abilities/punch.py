@@ -2,7 +2,7 @@ import fighter
 from arena import Arena
 import dice
 
-def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
+def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter) -> int:
     
     attacker_roll = dice.general_roll(attacker, "brawl")
     
@@ -16,8 +16,10 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             damage = dice.roll(1, 3)
             defender.take_damage(damage)
             print(f"{attacker.name} punches {defender.name}!")
+            return damage
         elif defender_success <= attacker_success:
             print(f"{defender.name} dodges a punch from {attacker.name}!")
+            return 2
     else:
         attacker_success = dice.general_roll(attacker, "brawl")
         defender_success = dice.general_roll(defender, "brawl")
@@ -26,10 +28,14 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             damage = dice.roll(1, 3)
             defender.take_damage(damage)
             print(f"{attacker.name} punches {defender.name}!")
+            return damage
         elif defender_success > attacker_success:
             damage = dice.roll(1, 3)
             print(f"{defender.name} blocks a punch from {attacker.name}!")
             print(f"{defender.name} deals {damage} damage in the process!")
             attacker.take_damage(dice.roll(1, 3), False)
+            return damage
         else:
             print(f"{attacker.name} fails to effectively punch {defender.name}, dealing no damage!")
+            return 2
+    return 0

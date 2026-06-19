@@ -136,6 +136,8 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         char = json_dict.get("char")
         if char:
             new_fighter.char = char
+
+        new_fighter.speed = json_dict["speed"]
         
         new_fighter.hp = json_dict["hp"]
         new_fighter.armor = json_dict["armor"]
