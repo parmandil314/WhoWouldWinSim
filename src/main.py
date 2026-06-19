@@ -87,21 +87,26 @@ class Scene:
 
             while self.fighter_a.is_alive and self.fighter_b.is_alive:
 
-                a_turn = True
-                while a_turn:
-                    self.draw(context, console)
-                    fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
-                    self.fighter_b.regain_energy()
-                    a_turn = self.fighter_a.energy > 0
-                    time.sleep(0.25)
-                
-                b_turn = True
-                while b_turn:
-                    self.draw(context, console)
-                    fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
-                    self.fighter_a.regain_energy()
-                    b_turn = self.fighter_b.energy > 0
-                    time.sleep(0.25)
+                while True:
+                    if self.fighter_a.energy > 0:
+                        fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
+                        self.draw(context, console)
+                        time.sleep(0.1)
+                    else:
+                        self.fighter_a.regain_energy()
+                    
+                    if self.fighter_b.hp <= 0:
+                        break
+                    
+                    if self.fighter_b.energy > 0:
+                        fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
+                        self.draw(context, console)
+                        time.sleep(0.1)
+                    else:
+                        self.fighter_b.regain_energy()
+                    
+                    if self.fighter_a.hp <= 0:
+                        break
 
 
 if __name__ == "__main__":

@@ -1,13 +1,6 @@
 import copy
 
 
-class Limb:
-    def __init__(self, name: str, max_hp: int):
-        self.name = name
-        self.max_hp = max_hp
-        self.hp = max_hp
-
-
 def default_choose_ability(attacker, target) -> str:
     return "none"
 
@@ -28,8 +21,9 @@ class Fighter:
         self.max_hp = 100
         self.is_alive = True
 
-        self.armor = 1.0 # multiplied by damage; 1.0 is no armor and 0.0 is impenetrable armor
-        # self.limbs: list[Limb] = []
+        self.db = 0
+        self.armor = 1 # damage -= armor
+
         self.abilities = {}
         self.choose_ability = default_choose_ability
         self.skills: dict[str, int] = {}
@@ -42,8 +36,7 @@ class Fighter:
 
 
     def take_damage(self, damage: int, print_effects=True):
-        modified_damage = damage * self.armor
-        self.hp -= modified_damage
+        self.hp -= damage
         if print_effects:
             print(f"{self.name} takes {damage} damage!")
 

@@ -5,7 +5,8 @@
     "hp": 100,
     "size": "medium",
     "speed": 1,
-    "armor": 1.0,
+    "armor": 0,
+    "db": 0,
     "attributes": {
         "STR": 50,
         "DEX": 50,
@@ -18,7 +19,7 @@
         "dodge": 25
     },
     "abilities": [
-        "punch", "move"
+        "punch", "move", "move_away"
     ],
     "dodge_if": "defender.hp < 50",
     "choose_ability_func": "nick_choose.py"

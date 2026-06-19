@@ -118,21 +118,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
     
     try:
         new_fighter = fighter.Fighter(json_dict["name"], json_dict["is_character"])
-    except:
-        return None
-    
-    """
-    try:
-        limbs: list[dict] = json_dict["limbs"]
-        for limb_dict in limbs:
-            limb = Limb(limb_dict["name"], limb_dict["hp"])
-            new_fighter.limbs.append(limb)
-    except:
-        pass
-    """
 
-    try:
-        
         char = json_dict.get("char")
         if char:
             new_fighter.char = char
@@ -140,6 +126,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         new_fighter.speed = json_dict["speed"]
         
         new_fighter.hp = json_dict["hp"]
+        new_fighter.db = json_dict["db"]
         new_fighter.armor = json_dict["armor"]
         new_fighter.dodge_if = json_dict["dodge_if"]
 
