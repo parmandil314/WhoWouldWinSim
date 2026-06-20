@@ -2,7 +2,7 @@
     "name": "Huck",
     "char": "H",
     "is_character": true,
-    "hp": 90,
+    "hp": 9,
     "size": "small",
     "speed": 2,
     "armor": 0,
@@ -13,7 +13,8 @@
         "CON": 55,
         "EDU": 25,
         "INT": 60,
-        "POW": 60
+        "POW": 60,
+        "SIZ": 40
     },
     "skills": {
         "brawl": 40,

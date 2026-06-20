@@ -2,6 +2,13 @@ import numpy as np
 import tcod
 
 
+class Message:
+    def __init__(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)) -> None:
+        self.text = text
+        self.fg = fg
+        self.bg = bg
+
+
 class Tile:
     def __init__(self, name: str, filename: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], walk_cost: float) -> None:
         self.name = name
@@ -13,6 +20,9 @@ class Tile:
 
 
 class Arena:
+
+    MESSAGE_LOG_MAX_LEN = 5
+
     def __init__(self, name: str, folder_path: str, width: int, height: int) -> None:
 
         import load
@@ -36,6 +46,26 @@ class Arena:
         self.tile_types: list[Tile] = load.load_tiles(f"{folder_path.removesuffix("/")}")
         self.tiles = np.zeros(shape=(self.width, self.height), dtype=int)
 
+        self.message_log: list[Message] = []
+
+    
+    def print(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)):
+        self.message_log.append(Message(text, fg, bg))
+        while len(self.message_log) > Arena.MESSAGE_LOG_MAX_LEN:
+            self.message_log.pop(0)
+
+
+    def draw_log(self, console: tcod.console.Console):
+
+        start_x = 1
+        start_y = self.height + 1
+        i = 0
+        for message in self.message_log:
+            y = start_y + i
+            x = start_x
+            console.print(x, y, text=message.text, fg=message.fg, bg=message.bg)
+            i += 1 + message.text.count("\n")
+
     
     def draw(self, fighter_a, fighter_b, console: tcod.console.Console):
         console.clear()
@@ -52,10 +82,14 @@ class Arena:
         b_x, b_y = fighter_b.pos
         console.fg[b_y][b_x] = (255, 0, 0)
         console.ch[b_y][b_x] = ord(fighter_b.char)
+        self.draw_log(console)
 
 
-    def is_walkable(self, x, y):
-        return self.tile_type(x, y).walk_cost > 0
+    def is_walkable(self, fighter_a, fighter_b, x, y):
+        if (fighter_a.pos[0] == x and fighter_a.pos[1] == y) or (fighter_b.pos[0] == x and fighter_b.pos[1] == y):
+            return False
+        within_bounds = 0 <= x < self.width and 0 <= y < self.height
+        return within_bounds and self.tile_type(x, y).walk_cost > 0
 
 
     def tile_type(self, x, y):

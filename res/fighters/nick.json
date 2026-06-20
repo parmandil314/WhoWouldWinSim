@@ -2,7 +2,7 @@
     "name": "Nick",
     "char": "N",
     "is_character": true,
-    "hp": 100,
+    "hp": 10,
     "size": "medium",
     "speed": 1,
     "armor": 0,
@@ -13,7 +13,8 @@
         "CON": 50,
         "EDU": 65,
         "INT": 50,
-        "POW": 45
+        "POW": 45,
+        "SIZ": 50
     },
     "skills": {
         "dodge": 25

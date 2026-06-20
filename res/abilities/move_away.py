@@ -30,9 +30,8 @@ def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter) -> int
         
         best_path = sorted(lengths, key=lambda length_pair: length_pair[1], reverse=True)[0]
         next_step = best_path[0]
-        if arena.is_walkable(next_step[0], next_step[1]):
+        if arena.is_walkable(actor, other, next_step[0], next_step[1]):
             actor.move(next_step[0] - actor.pos[0], next_step[1] - actor.pos[1])
-            return int(arena.tile_type(next_step[0], next_step[1]).walk_cost * actor.move_speed)
     except Exception as e:
         print(e)
     return 0

@@ -56,7 +56,10 @@ class Scene:
         self.fighter_arena = a
         
         self.fighter_a.pos = self.fighter_arena.a_start
+        self.fighter_a.arena = self.fighter_arena
+        
         self.fighter_b.pos = self.fighter_arena.b_start
+        self.fighter_b.arena = self.fighter_arena
     
 
     def draw(self, context: tcod.context.Context, console: tcod.console.Console):
@@ -67,10 +70,6 @@ class Scene:
             integer_scaling=True,
             align=(0, 0)
         )
-
-        for event in tcod.event.wait():
-            if isinstance(event, tcod.event.Quit):
-                raise SystemExit
 
 
     def fight(self):
@@ -86,28 +85,38 @@ class Scene:
         
             import fighter
 
-            while self.fighter_a.is_alive and self.fighter_b.is_alive:
+            fighting = True
+            while True:
 
-                while True:
+                for event in tcod.event.get():
+                    if isinstance(event, tcod.event.Quit):
+                        raise SystemExit
+                    elif isinstance(event, tcod.event.KeyDown):
+                        if event.sym.keysym == tcod.event.KeySym.ESCAPE:
+                            raise SystemExit
+
+                if fighting:
                     if self.fighter_a.energy > 0:
-                        fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
-                        self.draw(context, console)
-                        time.sleep(0.1)
+                        while self.fighter_a.energy > 0:
+                            fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
+                            self.draw(context, console)
+                            time.sleep(0.2)
                     else:
                         self.fighter_a.regain_energy()
                     
-                    if self.fighter_b.hp <= 0:
-                        break
+                    if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
+                        fighting = False
                     
                     if self.fighter_b.energy > 0:
-                        fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
-                        self.draw(context, console)
-                        time.sleep(0.1)
+                        while self.fighter_b.energy > 0:
+                            fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
+                            self.draw(context, console)
+                            time.sleep(0.2)
                     else:
                         self.fighter_b.regain_energy()
                     
-                    if self.fighter_a.hp <= 0:
-                        break
+                    if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
+                        fighting = False
 
 
 if __name__ == "__main__":

@@ -6,18 +6,18 @@ import tcod
 def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter):
 
     state = "normal"
-    if self.hp < self.max_hp - 40:
+    if self.hp < self.max_hp / 2:
         state = "careful"
 
     match state:
         case "normal":
-            if len(tcod.los.bresenham(self.pos, target.pos)) > 2:
+            if len(tcod.los.bresenham(self.pos, target.pos)) > 2 and self.tiles_moved > 0:
                 return "move"
             return "punch"
         case "careful":
-            if self.energy < 3:
+            if self.tiles_moved > 4:
                 return "move_away"
-            elif self.energy == fighter.Fighter.ENERGY_THRESHOLD:
+            elif len(tcod.los.bresenham(self.pos, target.pos)) > 2 and self.tiles_moved <= 4:
                 return "move"
             else:
                 return "punch"
