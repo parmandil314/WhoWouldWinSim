@@ -50,7 +50,8 @@ class Scene:
             try:
                 a = load.load_arena(arena_names[arena_names_list[int(name_i)]])
                 break
-            except:
+            except Exception as e:
+                print(e)
                 continue
         self.fighter_arena = a
         

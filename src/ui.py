@@ -189,7 +189,7 @@ def new_map(name: str, context: tcod.context.Context, console: tcod.console.Cons
         elif j == 1:
             default_wall = terrain_names[selected_index]
 
-    return arena.Arena(name, width, height)
+    return arena.Arena(name, f"res/arenas/{name}", width, height)
 
 
 def render_map(map: arena.Arena, mouse_x: int, mouse_y: int, diff_x: int, diff_y: int, context: tcod.context.Context, console: tcod.console.Console) -> None:
@@ -337,7 +337,7 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
     mouse_diff_y = 1
     toggle = False
 
-    terrain_names = load_names_json("res/tiles")
+    terrain_names = load_names_json(f"{map.folder}/tiles")
 
     render_map(map_to_edit, mouse_x, mouse_y, mouse_diff_x, mouse_diff_y, context, console)
 
@@ -428,5 +428,5 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
             render_map(map_to_edit, int(mouse_x), int(mouse_y), mouse_diff_x, mouse_diff_y, context, console)
 
 def save_map_data(map: arena.Arena) -> None:
-    with open("res/arenas/" + map.name + ".json", "w") as file:
+    with open(f"{map.folder}/{map.name}.json", "w") as file:
         file.write(map_to_json(map))

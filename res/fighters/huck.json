@@ -16,8 +16,8 @@
         "POW": 60
     },
     "skills": {
-        "brawl": 30,
-        "dodge": 45
+        "brawl": 40,
+        "dodge": 55
     },
     "abilities": [
         "punch", "move", "move_away"

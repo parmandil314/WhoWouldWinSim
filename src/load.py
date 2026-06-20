@@ -10,6 +10,9 @@ import fighter
 import dice
 import arena
 
+import pathlib
+from pathlib import Path
+
 
 globals_dict = {
     "numpy": np,
@@ -20,12 +23,12 @@ globals_dict = {
 }
 
 
-def load_tiles():
+def load_tiles(arena_folder_path: str):
     tiles = []
-    for entry in os.listdir("res/tiles"):
-        if entry.endswith(".json"):
-            with open(f"res/tiles/{entry}", "r") as f:
-                tile = load_tile(entry.removesuffix(".json"), f.read())
+    for entry in Path(f"{arena_folder_path.removesuffix("/")}/tiles").iterdir():
+        if entry.name.endswith(".json"):
+            with open(entry, "r") as f:
+                tile = load_tile(entry.name.removesuffix(".json"), f.read())
                 if tile is not None:
                     tiles.append(tile)
     return tiles
@@ -44,22 +47,24 @@ def load_tile(filename: str, json_text: str):
 
 def load_arena_names() -> dict[str, str]:
 
-    names_dict = {}
-    for entry in os.listdir("res/arenas"):
-        if entry.endswith(".json"):
-            with open(f"res/arenas/{entry}", "r") as f:
-                json_dict = json.load(f)
-                try:
-                    names_dict[json_dict["name"]] = f"res/arenas/{entry}"
-                except:
-                    continue
+    names_dict: dict[str, str] = {}
+    for folder_entry in Path("res/arenas").iterdir():
+        if folder_entry.is_dir():
+            for entry in folder_entry.iterdir():
+                if entry.is_file() and entry.name.endswith(".json"):
+                    with open(entry, "r") as f:
+                        json_dict = json.load(f)
+                        try:
+                            names_dict[json_dict["name"]] = str(entry.resolve())
+                        except:
+                            continue
     return names_dict
 
 
 def load_arena(filename: str) -> arena.Arena:
     with open(filename, "r") as f:
         json_dict: dict = json.load(f)
-        new_arena = arena.Arena(json_dict["name"], json_dict["width"], json_dict["height"])
+        new_arena = arena.Arena(json_dict["name"], str(Path(filename).resolve().parent), json_dict["width"], json_dict["height"])
         
         a_start = json_dict.get("a_start")
         if a_start:

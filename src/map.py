@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 
 import json
@@ -28,7 +30,10 @@ def load_map_data(path: str) -> arena.Arena:
     with open(path, "r") as file:
         json_data = json.loads(file.read())
     
-    data = arena.Arena(json_data["name"], json_data["width"], json_data["height"])
+    data = arena.Arena(json_data["name"], str(Path(path).parent), json_data["width"], json_data["height"])
+
+    data.a_start = tuple(json_data["a_start"])
+    data.b_start = tuple(json_data["b_start"])
     
     json_tiles = list(json_data["tiles"])
     tiles = np.reshape(json_tiles, (data.width, data.height))

@@ -13,11 +13,12 @@ class Tile:
 
 
 class Arena:
-    def __init__(self, name: str, width: int, height: int) -> None:
+    def __init__(self, name: str, folder_path: str, width: int, height: int) -> None:
 
         import load
 
         self.name = name
+        self.folder = folder_path
 
         self.a_start: tuple[int, int] = (0, 0)
         self.b_start: tuple[int, int] = (width - 1, height - 1)
@@ -32,13 +33,13 @@ class Arena:
         else:
             self.height = 10
         
-        self.tile_types: list[Tile] = load.load_tiles()
+        self.tile_types: list[Tile] = load.load_tiles(f"{folder_path.removesuffix("/")}")
         self.tiles = np.zeros(shape=(self.width, self.height), dtype=int)
 
     
     def draw(self, fighter_a, fighter_b, console: tcod.console.Console):
         console.clear()
-        for (x, y), tile in np.ndenumerate(self.tiles):
+        for (y, x), tile in np.ndenumerate(self.tiles):
             tile_type = self.tile_types[tile]
             console.fg[y][x] = tile_type.fg
             console.bg[y][x] = tile_type.bg
