@@ -86,6 +86,7 @@ class Scene:
             import fighter
 
             fighting = True
+            fighter_a_turn = True
             while True:
 
                 for event in tcod.event.get():
@@ -96,27 +97,20 @@ class Scene:
                             raise SystemExit
 
                 if fighting:
-                    if self.fighter_a.energy > 0:
-                        while self.fighter_a.energy > 0:
-                            fighter.attacker_take_turn(self.fighter_arena, self.fighter_a, self.fighter_b)
-                            self.draw(context, console)
-                            time.sleep(0.2)
+
+                    if fighter_a_turn:
+                        self.fighter_a.take_turn(self.fighter_arena, self.fighter_b)
+                        self.draw(context, console)
+                        time.sleep(0.2)
+                        if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
+                            fighting = False
                     else:
-                        self.fighter_a.regain_energy()
-                    
-                    if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
-                        fighting = False
-                    
-                    if self.fighter_b.energy > 0:
-                        while self.fighter_b.energy > 0:
-                            fighter.attacker_take_turn(self.fighter_arena, self.fighter_b, self.fighter_a)
-                            self.draw(context, console)
-                            time.sleep(0.2)
-                    else:
-                        self.fighter_b.regain_energy()
-                    
-                    if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
-                        fighting = False
+                        self.fighter_b.take_turn(self.fighter_arena, self.fighter_a)
+                        self.draw(context, console)
+                        time.sleep(0.2)
+                        if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
+                            fighting = False
+                    fighter_a_turn = not fighter_a_turn
 
 
 if __name__ == "__main__":

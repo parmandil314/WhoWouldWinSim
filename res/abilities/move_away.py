@@ -1,12 +1,8 @@
 import fighter
 from arena import Arena
-import dice
 import tcod
-import numpy
 
-from operator import add
-
-def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter) -> int:
+def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter):
     
     try:
         costs = [[int(arena.tile_type(x, y).walk_cost) for x in range(arena.width)] for y in range(arena.height)]
@@ -30,8 +26,8 @@ def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter) -> int
         
         best_path = sorted(lengths, key=lambda length_pair: length_pair[1], reverse=True)[0]
         next_step = best_path[0]
-        if arena.is_walkable(actor, other, next_step[0], next_step[1]):
-            actor.move(next_step[0] - actor.pos[0], next_step[1] - actor.pos[1])
+        if actor.tiles_moved + 1 < actor.move_rate and arena.is_walkable(actor, other, next_step[0], next_step[1]):
+            actor.move(other, next_step[1] - actor.pos[1], next_step[0] - actor.pos[0])
+            actor.tiles_moved += 1
     except Exception as e:
         print(e)
-    return 0

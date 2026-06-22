@@ -11,13 +11,13 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
 
     match state:
         case "normal":
-            if len(tcod.los.bresenham(self.pos, target.pos)) > 2 and self.tiles_moved > 0:
+            if not self.in_range(target):
                 return "move"
             return "punch"
         case "careful":
-            if self.tiles_moved > 4:
+            if self.in_range(target) and self.tiles_moved < self.move_rate - 2:
                 return "move_away"
-            elif len(tcod.los.bresenham(self.pos, target.pos)) > 2 and self.tiles_moved <= 4:
-                return "move"
-            else:
+            elif self.in_range(target) and self.tiles_moved == self.move_rate - 1:
                 return "punch"
+            else:
+                return "move"

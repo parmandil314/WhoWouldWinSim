@@ -10,7 +10,6 @@ import fighter
 import dice
 import arena
 
-import pathlib
 from pathlib import Path
 
 
@@ -127,13 +126,12 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         char = json_dict.get("char")
         if char:
             new_fighter.char = char
-
-        new_fighter.speed = json_dict["speed"]
         
         new_fighter.hp = json_dict["hp"]
         new_fighter.db = json_dict["db"]
         new_fighter.armor = json_dict["armor"]
         new_fighter.dodge_if = json_dict["dodge_if"]
+        new_fighter.move_rate = json_dict["move_rate"]
 
         for name in json_dict["abilities"]:
             new_fighter.abilities[name] = abilities[name]

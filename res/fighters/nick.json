@@ -4,9 +4,9 @@
     "is_character": true,
     "hp": 10,
     "size": "medium",
-    "speed": 1,
     "armor": 0,
     "db": 0,
+    "move_rate": 2,
     "attributes": {
         "STR": 50,
         "DEX": 50,

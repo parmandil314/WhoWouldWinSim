@@ -86,11 +86,14 @@ class Arena:
 
 
     def is_walkable(self, fighter_a, fighter_b, x, y):
-        if (fighter_a.pos[0] == x and fighter_a.pos[1] == y) or (fighter_b.pos[0] == x and fighter_b.pos[1] == y):
+        if fighter_a.pos == (x, y) or fighter_b.pos == (x, y):
             return False
-        within_bounds = 0 <= x < self.width and 0 <= y < self.height
-        return within_bounds and self.tile_type(x, y).walk_cost > 0
 
+        if not (0 <= x < self.width) or not (0 <= y < self.height):
+            return False
+        
+        return self.tile_type(x, y).walk_cost > 0.0
+    
 
     def tile_type(self, x, y):
         return self.tile_types[self.tiles[y][x]]

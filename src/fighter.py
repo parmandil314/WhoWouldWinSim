@@ -2,7 +2,7 @@ import copy
 import tcod
 
 
-def default_choose_ability(attacker, target) -> str:
+def default_choose_ability(arena, attacker, target) -> str:
     return "none"
 
 
@@ -20,12 +20,12 @@ class Fighter:
 
         self.pos: tuple[int, int] = (0, 0)
 
-        self.hp = 100
-        self.max_hp = 100
+        self.hp = 10
+        self.max_hp = 10
         self.is_alive = True
 
         self.db = 0
-        self.armor = 1 # damage -= armor
+        self.armor = 0 # damage -= armor
 
         self.abilities = {}
         self.choose_ability = default_choose_ability
@@ -34,19 +34,18 @@ class Fighter:
 
         self.dodge_if: str = "defender.hp < 50"
 
-        self.energy: int = Fighter.ENERGY_THRESHOLD
-        self.speed: int = 3
-        self.move_speed = 1.0
-        self.move_rate = 8 # MOV
+        self.move_rate = 1
         self.tiles_moved = 0
 
         self.arena: Arena
 
 
     def take_damage(self, damage: int, print_effects=True):
-        self.hp -= damage
+
+        mod_damage = damage - self.armor
+        self.hp -= mod_damage
         if print_effects:
-            self.arena.print(f"{self.name} takes {damage} damage!")
+            self.arena.print(f"{self.name} takes {mod_damage} damage!")
 
         if self.hp > 0:
             if self.hp < self.max_hp // 2:
@@ -58,29 +57,42 @@ class Fighter:
             self.arena.print(f"{self.name} loses!")
     
 
-    def move(self, dx, dy):
-        pos = (self.pos[0] + dx, self.pos[1] + dy)
+    def move(self, other, dx, dy):
+
+        mod_dx = int(dx)
+        if dx > 1:
+            mod_dx = 1
+        elif dx < -1:
+            mod_dx = -1
         
-        num_tiles = len(tcod.los.bresenham(self.pos, pos))
+        mod_dy = int(dy)
+        if dy > 1:
+            mod_dy = 1
+        elif dy < -1:
+            mod_dy = -1
 
-        if self.tiles_moved - num_tiles >= 0:
-            self.tiles_moved -= num_tiles
-            self.pos = pos
+        new_pos = (self.pos[0] + mod_dx, self.pos[1] + mod_dy)
+        if self.arena.is_walkable(self, other, *new_pos):
+            self.pos = new_pos
+            self.tiles_moved += 1
+
+    
+    def in_range(self, other, range=0):
+        distance = len(tcod.los.bresenham(self.pos, other.pos))
+        if distance <= 2 + range:
+            return True
+        return False
 
 
-    def regain_energy(self):
-        self.energy += self.speed
+    def take_turn(self, arena, opponent):
+
+        self.use_ability(arena, self.choose_ability(arena, self, opponent), opponent)
+        self.tiles_moved = 0
 
 
-def attacker_take_turn(arena, attacker, opponent):
+    def use_ability(self, arena, name: str, target):
 
-    attacker_use_ability(arena, attacker, attacker.choose_ability(arena, attacker, opponent), opponent)
-
-
-def attacker_use_ability(arena, attacker, name: str, target):
-
-    try:
-        energy_used = attacker.abilities[name](arena, attacker, target)
-        attacker.energy -= energy_used
-    except Exception as e:
-        print(e)
+        try:
+            self.abilities[name](arena, self, target)
+        except Exception as e:
+            print(e)
