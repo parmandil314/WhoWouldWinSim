@@ -66,12 +66,12 @@ def load_names_json(path: str) -> list[str]:
     return [file.stem for file in file_list if file.name.endswith(".json")]
 
 
-def new_map(name: str, context: tcod.context.Context, console: tcod.console.Console) -> arena.Arena:
+def new_map(name: str, arena_dir: str, arena_path: str, context: tcod.context.Context, console: tcod.console.Console) -> arena.Arena:
 
-    width = 50
+    width = 20
     width_selected = True
 
-    height = 50
+    height = 20
     height_selected = False
 
     def render_dim_selection(context: tcod.context.Context, console: tcod.console.Console, width: int, height: int):
@@ -148,10 +148,10 @@ def new_map(name: str, context: tcod.context.Context, console: tcod.console.Cons
 
         context.present(console, keep_aspect=True, integer_scaling=True) 
     
-    terrain_names: list[str] = load_names_json("res/tiles")
+    terrain_names: list[str] = load_names_json(f"{arena_dir}/tiles")
     
-    default_floor: str
-    default_wall: str
+    default_floor: int = 0
+    default_wall: int = 0
     for j in range(2):
         i = 0
         selected_index = 0
@@ -185,11 +185,18 @@ def new_map(name: str, context: tcod.context.Context, console: tcod.console.Cons
                 render_terrain_selection("floor" if j == 0 else "wall", context, console, terrain_names, terrain_names[i], terrain_names[selected_index])
 
         if j == 0:
-            default_floor = terrain_names[selected_index]
+            default_floor = selected_index
         elif j == 1:
-            default_wall = terrain_names[selected_index]
+            default_wall = selected_index
 
-    return arena.Arena(name, f"res/arenas/{name}", width, height)
+    a = arena.Arena(name, arena_dir, width, height)
+    for y in range(height):
+        for x in range(width):
+            if x == 0 or y == 0 or x == width - 1 or y == height - 1:
+                a.tiles[y][x] = default_wall
+            else:
+                a.tiles[y][x] = default_floor
+    return a
 
 
 def render_map(map: arena.Arena, mouse_x: int, mouse_y: int, diff_x: int, diff_y: int, context: tcod.context.Context, console: tcod.console.Console) -> None:
@@ -200,6 +207,7 @@ def render_map(map: arena.Arena, mouse_x: int, mouse_y: int, diff_x: int, diff_y
             terrain_char = map.tile_char_at(x, y)
             console.ch[y][x] = terrain_char[0]
             console.fg[y][x] = terrain_char[1]
+            console.bg[y][x] = terrain_char[2]
     
     try:
         console.ch[int(map.a_start[0])][int(map.a_start[1])] = ord("A")

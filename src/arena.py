@@ -31,12 +31,12 @@ class Arena:
         self.a_start: tuple[int, int] = (0, 0)
         self.b_start: tuple[int, int] = (width - 1, height - 1)
 
-        if 4 < width < 20:
+        if 5 <= width <= 30:
             self.width = width
         else:
             self.width = 10
         
-        if 4 < height < 20:
+        if 5 <= height <= 30:
             self.height = height
         else:
             self.height = 10
@@ -117,4 +117,4 @@ class Arena:
 
     def tile_char_at(self, x, y):
         tile = self.tiles[y][x]
-        return (ord(self.tile_types[tile].char), self.tile_types[tile].fg)
+        return (ord(self.tile_types[tile].char), self.tile_types[tile].fg, self.tile_types[tile].bg)

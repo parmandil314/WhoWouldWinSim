@@ -1,0 +1,7 @@
+{
+    "name": "Locked Door",
+    "char": "#",
+    "fg": [139, 69, 19],
+    "bg": [50, 50, 50],
+    "walk_cost": 0
+}
