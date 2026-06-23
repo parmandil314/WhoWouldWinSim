@@ -130,7 +130,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         new_fighter.hp = json_dict["hp"]
         new_fighter.db = json_dict["db"]
         new_fighter.armor = json_dict["armor"]
-        new_fighter.dodge_if = json_dict["dodge_if"]
+        new_fighter.dodge = json_dict["dodge_if"]
         new_fighter.move_rate = json_dict["move_rate"]
 
         for name in json_dict["abilities"]:

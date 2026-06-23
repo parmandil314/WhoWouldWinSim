@@ -15,9 +15,9 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
                 return "move"
             return "punch"
         case "careful":
-            if self.in_range(target) and self.tiles_moved < self.move_rate - 2:
+            if self.in_range(target) and self.tiles_moved == self.move_rate - 1:
                 return "move_away"
-            elif self.in_range(target) and self.tiles_moved == self.move_rate - 1:
+            elif self.in_range(target) and self.tiles_moved < self.move_rate - 1:
                 return "punch"
             else:
                 return "move"

@@ -5,7 +5,7 @@
     "hp": 9,
     "size": "small",
     "armor": 0,
-    "db": 0,
+    "db": -1,
     "move_rate": 3,
     "attributes": {
         "STR": 45,
@@ -18,7 +18,7 @@
     },
     "skills": {
         "brawl": 40,
-        "dodge": 55
+        "dodge": 40
     },
     "abilities": [
         "punch", "move", "move_away"

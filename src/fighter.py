@@ -1,4 +1,5 @@
 import copy
+import time
 import tcod
 
 
@@ -32,10 +33,11 @@ class Fighter:
         self.skills: dict[str, int] = {}
         self.attributes: dict[str, int] = {}
 
-        self.dodge_if: str = "defender.hp < 50"
+        self.dodge: str = "defender.hp < 50"
 
         self.move_rate = 1
         self.tiles_moved = 0
+        self.action_taken = False
 
         self.arena: Arena
 
@@ -84,10 +86,14 @@ class Fighter:
         return False
 
 
-    def take_turn(self, arena, opponent):
+    def take_turn(self, scene, arena, context, console, opponent):
 
-        self.use_ability(arena, self.choose_ability(arena, self, opponent), opponent)
+        self.action_taken = False
         self.tiles_moved = 0
+        for _ in range(self.move_rate):
+            scene.draw(context, console)
+            time.sleep(0.2)
+            self.use_ability(arena, self.choose_ability(arena, self, opponent), opponent)
 
 
     def use_ability(self, arena, name: str, target):

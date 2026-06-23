@@ -4,7 +4,6 @@ import time
 
 class Scene:
 
-    import arena
     def __init__(self) -> None:
 
         import load
@@ -82,10 +81,10 @@ class Scene:
             console = tcod.console.Console(80, 50)
             context = tcod.context.new(title=f"Who Would Win: {self.fighter_a.name} vs. {self.fighter_b.name}",
                                        columns=console.width, rows=console.height, tileset=tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
-        
-            import fighter
 
-            fighting = True
+            self.fighter_arena.MESSAGE_LOG_MAX_LEN = console.height - self.fighter_arena.height
+
+            fighting = False
             fighter_a_turn = True
             while True:
 
@@ -95,22 +94,23 @@ class Scene:
                     elif isinstance(event, tcod.event.KeyDown):
                         if event.sym.keysym == tcod.event.KeySym.ESCAPE:
                             raise SystemExit
+                        elif event.sym.keysym == tcod.event.KeySym.SPACE:
+                            if not fighting:
+                                fighting = True
 
                 if fighting:
 
                     if fighter_a_turn:
-                        self.fighter_a.take_turn(self.fighter_arena, self.fighter_b)
-                        self.draw(context, console)
-                        time.sleep(0.2)
+                        self.fighter_a.take_turn(self, self.fighter_arena, context, console, self.fighter_b)
                         if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
                             fighting = False
                     else:
-                        self.fighter_b.take_turn(self.fighter_arena, self.fighter_a)
-                        self.draw(context, console)
-                        time.sleep(0.2)
+                        self.fighter_b.take_turn(self, self.fighter_arena, context, console, self.fighter_a)
                         if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
                             fighting = False
                     fighter_a_turn = not fighter_a_turn
+                else:
+                    self.draw(context, console)
 
 
 if __name__ == "__main__":

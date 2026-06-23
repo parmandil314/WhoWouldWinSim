@@ -21,8 +21,6 @@ class Tile:
 
 class Arena:
 
-    MESSAGE_LOG_MAX_LEN = 5
-
     def __init__(self, name: str, folder_path: str, width: int, height: int) -> None:
 
         import load
@@ -42,6 +40,8 @@ class Arena:
             self.height = height
         else:
             self.height = 10
+
+        self.MESSAGE_LOG_MAX_LEN: int = 20
         
         self.tile_types: list[Tile] = load.load_tiles(f"{folder_path.removesuffix("/")}")
         self.tiles = np.zeros(shape=(self.width, self.height), dtype=int)
@@ -51,7 +51,7 @@ class Arena:
     
     def print(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)):
         self.message_log.append(Message(text, fg, bg))
-        while len(self.message_log) > Arena.MESSAGE_LOG_MAX_LEN:
+        while len(self.message_log) > self.MESSAGE_LOG_MAX_LEN:
             self.message_log.pop(0)
 
 
