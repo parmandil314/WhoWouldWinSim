@@ -25,6 +25,7 @@ class Fighter:
         self.max_hp = 10
         self.is_alive = True
 
+        self.build = 0
         self.db = 0
         self.armor = 0 # damage -= armor
 

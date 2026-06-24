@@ -1,6 +1,6 @@
 {
-    "name": "Nick",
-    "char": "N",
+    "name": "Test Stander",
+    "char": "S",
     "is_character": true,
     "hp": 10,
     "build": 0,
@@ -11,17 +11,17 @@
         "STR": 50,
         "DEX": 50,
         "CON": 50,
-        "EDU": 65,
+        "EDU": 50,
         "INT": 50,
-        "POW": 45,
+        "POW": 50,
         "SIZ": 50
     },
     "skills": {
         "dodge": 25
     },
     "abilities": [
-        "punch", "move", "move_away", "shove"
+        "none"
     ],
-    "dodge_if": "defender.hp < 5",
-    "choose_ability_func": "nick_choose.py"
+    "dodge_if": "defender.hp < defender.hp // 2",
+    "choose_ability_func": "stander_choose.py"
 }

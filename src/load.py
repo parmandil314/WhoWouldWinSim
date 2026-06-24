@@ -13,7 +13,7 @@ import arena
 from pathlib import Path
 
 
-globals_dict = {
+GLOBALS = {
     "numpy": np,
     "tcod": tcod,
     "dice": dice,
@@ -39,7 +39,12 @@ def load_tile(filename: str, json_text: str):
     import arena
 
     try:
-        return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], json_dict["walk_cost"])
+        walk_cost = json_dict["walk_cost"]
+        try:
+            damage = json_dict["damage"]
+        except:
+            damage = 0 if walk_cost != 0 else 2
+        return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], walk_cost, damage)
     except:
         return None
 
@@ -96,7 +101,7 @@ def load_ability(python_text: str):
 
     local_namespace = {}
     try:
-        exec(python_text, globals_dict, local_namespace)
+        exec(python_text, GLOBALS, local_namespace)
         return local_namespace["execute"]
     except:
         return None
@@ -128,6 +133,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
             new_fighter.char = char
         
         new_fighter.hp = json_dict["hp"]
+        new_fighter.build = json_dict["build"]
         new_fighter.db = json_dict["db"]
         new_fighter.armor = json_dict["armor"]
         new_fighter.dodge = json_dict["dodge_if"]
@@ -139,7 +145,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         with open(f"res/fighters/{json_dict["choose_ability_func"]}", "r") as f:
             local_namespace = {}
             try:
-                exec(f.read(), globals_dict, local_namespace)
+                exec(f.read(), GLOBALS, local_namespace)
                 new_fighter.choose_ability = local_namespace["choose_ability"]
             except:
                 return None

@@ -2,14 +2,14 @@ import fighter
 from arena import Arena
 import tcod
 
-def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter):
+def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     
     try:
-        if actor.tiles_moved + 1 <= actor.move_rate:
+        if attacker.tiles_moved + 1 <= attacker.move_rate:
         
             costs = [[int(arena.tile_type(x, y).walk_cost) for x in range(arena.width)] for y in range(arena.height)]
             pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=2, diagonal=3))
-            pathfinder.add_root(other.pos)
+            pathfinder.add_root(defender.pos)
 
             DIRECTIONS = [
                 (-1, -1),
@@ -24,12 +24,12 @@ def execute(arena: Arena, actor: fighter.Fighter, other: fighter.Fighter):
 
             lengths: list[tuple[tuple[int, int], int]] = []
             for direction in DIRECTIONS:
-                lengths.append((direction, len(pathfinder.path_to((actor.pos[0] + direction[0], actor.pos[1] + direction[1])))))
+                lengths.append((direction, len(pathfinder.path_to((attacker.pos[0] + direction[0], attacker.pos[1] + direction[1])))))
             
             best_path = sorted(lengths, key=lambda length_pair: length_pair[1], reverse=True)[0]
             next_step = best_path[0]
-            if arena.is_walkable(actor, other, next_step[0], next_step[1]):
-                actor.move(other, next_step[1] - actor.pos[1], next_step[0] - actor.pos[0])
-                actor.tiles_moved += 1
+            if arena.is_walkable(attacker, defender, next_step[0], next_step[1]):
+                attacker.move(defender, next_step[1] - attacker.pos[1], next_step[0] - attacker.pos[0])
+                attacker.tiles_moved += 1
     except Exception as e:
         print(e)

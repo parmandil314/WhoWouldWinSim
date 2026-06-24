@@ -3,7 +3,7 @@
     "char": "H",
     "is_character": true,
     "hp": 9,
-    "size": "small",
+    "build": -1,
     "armor": 0,
     "db": -1,
     "move_rate": 3,
@@ -23,6 +23,6 @@
     "abilities": [
         "punch", "move", "move_away"
     ],
-    "dodge_if": "defender.hp < 80",
+    "dodge_if": "defender.hp < 8",
     "choose_ability_func": "huck_choose.py"
 }
