@@ -23,7 +23,7 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             damage = weapon.roll_damage()
             if weapon.range == 0:
                 damage += attacker.db
-            
+
             arena.print(f"{attacker.name} hits {defender.name}!", (255, 0, 0))
             defender.take_damage(damage)
             arena.print(" ", (0, 0, 0))

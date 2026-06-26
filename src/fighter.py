@@ -83,6 +83,9 @@ class Fighter:
 
     def move(self, other, dx, dy):
 
+        if self.tiles_moved > self.move_rate:
+            return
+
         mod_dx = int(dx)
         if dx > 1:
             mod_dx = 1
