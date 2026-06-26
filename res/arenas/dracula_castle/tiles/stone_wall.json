@@ -4,5 +4,6 @@
     "fg": [100, 100, 100],
     "bg": [50, 50, 50],
     "walk_cost": 0,
-    "damage": 3
+    "damage": 3,
+    "is_opaque": true
 }

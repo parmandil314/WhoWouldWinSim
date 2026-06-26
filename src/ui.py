@@ -363,8 +363,6 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
                         mouse_diff_y = 1
                     else:
                         return None
-                elif event.sym.keysym == tcod.event.KeySym.RETURN:
-                    return map_to_edit
                 elif event.sym.keysym == tcod.event.KeySym.LSHIFT:
                     if not toggle:
                         toggle = True
@@ -422,7 +420,7 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
                     else:
                         if mouse_x + 1 < map_to_edit.width:
                             mouse_x += 1
-                elif event.sym.keysym == tcod.event.KeySym.T:
+                elif event.sym.keysym == tcod.event.KeySym.RETURN:
                     change_terrain_data(map_to_edit, mouse_x, mouse_y, mouse_diff_x, mouse_diff_y, terrain_names, context, console)
                     toggle = False
                     mouse_diff_x = 1

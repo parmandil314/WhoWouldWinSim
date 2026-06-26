@@ -1,0 +1,8 @@
+{
+    "name": "Chair",
+    "char": "*",
+    "fg": [99, 49, 50],
+    "bg": [49, 19, 0],
+    "walk_cost": 4,
+    "is_opaque": false
+}
