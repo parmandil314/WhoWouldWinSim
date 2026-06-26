@@ -210,14 +210,14 @@ def render_map(map: arena.Arena, mouse_x: int, mouse_y: int, diff_x: int, diff_y
             console.bg[y][x] = terrain_char[2]
     
     try:
-        console.ch[int(map.a_start[0])][int(map.a_start[1])] = ord("A")
-        console.fg[int(map.a_start[0])][int(map.a_start[1])] = (0, 100, 255)
+        console.ch[int(map.a_start[1])][int(map.a_start[0])] = ord("A")
+        console.fg[int(map.a_start[1])][int(map.a_start[0])] = (0, 100, 255)
     except:
         pass
 
     try:
-        console.ch[int(map.b_start[0])][int(map.b_start[1])] = ord("B")
-        console.fg[int(map.b_start[0])][int(map.b_start[1])] = (255, 0, 0)
+        console.ch[int(map.b_start[1])][int(map.b_start[0])] = ord("B")
+        console.fg[int(map.b_start[1])][int(map.b_start[0])] = (255, 0, 0)
     except:
         pass
 
@@ -428,9 +428,9 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
                 elif event.sym.keysym == tcod.event.KeySym.S:
                     save_map_data(map_to_edit)
                 elif event.sym.keysym == tcod.event.KeySym.A:
-                    map.a_start = (mouse_y, mouse_x)
+                    map.a_start = (mouse_x, mouse_y)
                 elif event.sym.keysym == tcod.event.KeySym.B:
-                    map.b_start = (mouse_y, mouse_x)
+                    map.b_start = (mouse_x, mouse_y)
             render_map(map_to_edit, int(mouse_x), int(mouse_y), mouse_diff_x, mouse_diff_y, context, console)
 
 def save_map_data(map: arena.Arena) -> None:

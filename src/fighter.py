@@ -21,7 +21,7 @@ class Weapon:
     def roll_damage(self):
         return dice.roll(self.num_dice, self.dice_sides, self.modifier)
 
-    
+
 DEFAULT_MELEE_WEAPON = Weapon("Fists", "brawl", 1, 0, 1, 3)
 
 
@@ -101,7 +101,6 @@ class Fighter:
         new_pos = (self.pos[0] + mod_dx, self.pos[1] + mod_dy)
         if self.arena.is_walkable(self, other, *new_pos):
             self.pos = new_pos
-            self.tiles_moved += 1
 
     
     def in_range(self, other, range=0):
@@ -115,10 +114,16 @@ class Fighter:
 
         self.action_taken = False
         self.tiles_moved = 0
-        for _ in range(self.move_rate):
+        while self.tiles_moved <= self.move_rate:
             scene.draw(context, console)
-            time.sleep(0.2)
-            self.use_ability(arena, self.choose_ability(arena, self, opponent), opponent)
+            time.sleep(0.15)
+            ability_choice = self.choose_ability(arena, self, opponent)
+            if ability_choice not in ("move", "move_away") and not self.action_taken:
+                self.use_ability(arena, ability_choice, opponent)
+                self.action_taken = True
+            elif ability_choice in ("move", "move_away"):
+                self.use_ability(arena, ability_choice, opponent)
+                self.tiles_moved += 1
 
 
     def use_ability(self, arena, name: str, target):

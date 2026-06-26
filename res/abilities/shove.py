@@ -29,4 +29,4 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
         else:
             fighter_arena.print(f"{attacker.name} fails to move {defender.name}!", (100, 100, 100))
     except Exception as e:
-        print(e)
+        print(f"shove.py: {e}")

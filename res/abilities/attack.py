@@ -4,9 +4,6 @@ import dice
 
 def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):    
     
-    if attacker.action_taken:
-        return
-    
     weapon = attacker.equipped_weapon
     if weapon is None:
         weapon = fighter.DEFAULT_MELEE_WEAPON
@@ -54,5 +51,3 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
         else:
             arena.print(f"{attacker.name} fails to effectively hit {defender.name}, dealing no damage!", (100, 100, 100))
             arena.print(" ", (0, 0, 0))
-        
-    attacker.action_taken = True

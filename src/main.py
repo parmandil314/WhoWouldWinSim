@@ -99,7 +99,6 @@ class Scene:
                                 fighting = True
 
                 if fighting:
-
                     if fighter_a_turn:
                         self.fighter_a.take_turn(self, self.fighter_arena, context, console, self.fighter_b)
                         if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
