@@ -114,7 +114,7 @@ class Arena:
         if not (0 <= x < self.width) or not (0 <= y < self.height):
             return False
         
-        return self.tile_type(x, y).walk_cost > 0.0
+        return self.tile_type(x, y).walk_cost == 0
     
 
     def tile_type(self, x, y):
@@ -142,30 +142,23 @@ class Arena:
         return (ord(self.tile_types[tile].char), self.tile_types[tile].fg, self.tile_types[tile].bg)
 
     
-    def nearest_wall(self, x, y, max_distance=30):
+    def nearest_wall(self, x, y):
+        costs = [[int(self.tile_type(x, y).walk_cost) for x in range(self.width)] for y in range(self.height)]
+        pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=2, diagonal=3))
+        for y in range(self.height):
+            for x in range(self.width):
+                if costs[y][x] == 0:
+                    pathfinder.add_root((x, y))
+        path: list[tuple[int, int]] = pathfinder.path_from((x, y)).tolist()
+        return path
         
-        start_pos = (x, y)
-
-        def find_walls(pos, depth = 0) -> tuple[int, int, int]:
-            if depth > max_distance:
-                return (-1, -1, max_distance)
-            for direction in DIRECTIONS:
-                new_pos = (
-                    pos[0] + direction[0],
-                    pos[1] + direction[1]
-                )
-                if self.is_wall(*new_pos):
-                    return (*new_pos, len(tcod.los.bresenham(start_pos, new_pos).tolist()))
-                return find_walls(new_pos, depth + 1)
-            return (-1, -1, max_distance)
-
-        return find_walls(start_pos)
-
 
     def shortest_path(self, start, end, points_to_avoid: list[tuple[int, int]] = []) -> list:
         costs = [[int(self.tile_type(x, y).walk_cost) for x in range(self.width)] for y in range(self.height)]
         for point in points_to_avoid:
             x, y = point
             costs[y][x] = 0
-        path: np.ndarray = tcod.path.path2d(costs, start_points=[start], end_points=[end], cardinal=2, diagonal=3)
+        pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=2, diagonal=3))
+        pathfinder.add_root(start)
+        path: np.ndarray = pathfinder.path_to(end)
         return path.tolist()

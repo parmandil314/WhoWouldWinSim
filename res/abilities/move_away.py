@@ -28,8 +28,6 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             
             best_path = sorted(lengths, key=lambda length_pair: length_pair[1], reverse=True)[0]
             next_step = best_path[0]
-            if arena.is_walkable(attacker, defender, next_step[0], next_step[1]):
-                attacker.move(defender, next_step[1] - attacker.pos[1], next_step[0] - attacker.pos[0])
-                attacker.tiles_moved += 1
+            attacker.move(defender, next_step[1] - attacker.pos[1], next_step[0] - attacker.pos[0])
     except Exception as e:
         print(e)

@@ -6,27 +6,27 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
 
     try:
         if dice.roll_maneuver(attacker, defender, "brawl"):
-            x, y, _ = fighter_arena.nearest_wall(*defender.pos)
-            wall_pos = (x, y)
-            path = fighter_arena.shortest_path(defender.pos, wall_pos, [attacker.pos])
+            path = fighter_arena.nearest_wall(*defender.pos)
+            step = path[1]
+            if len(path) > 2:
 
-            for step in path:
                 a_present = attacker.pos[0] == step[0] and attacker.pos[1] == step[1]
-                d_present = defender.pos[0] == step[0] and defender.pos[1] == step[1]
-                fighter_present = a_present or d_present
-                is_walkable = fighter_arena.tile_type(*step).walk_cost > 0
-
-                if fighter_present:
-                    continue
-                elif is_walkable:
+                if a_present:
+                    fighter_arena.print(f"{attacker.name} shoves {defender.name}!")
+                    attacker_pos = (attacker.pos[0], attacker.pos[1])
+                    defender_pos = (defender.pos[0], defender.pos[1])
+                    attacker.pos = defender_pos
+                    defender.pos = attacker_pos
+                else:
                     fighter_arena.print(f"{attacker.name} shoves {defender.name}!")
                     defender.pos = step
                     return
-                else:
-                    tile_type = fighter_arena.tile_type(*step)
-                    fighter_arena.print(f"{attacker.name} shoves {defender.name} into the {tile_type.name}!")
-                    defender.take_damage(tile_type.damage)
-                    return
+            else:
+
+                tile_type = fighter_arena.tile_type(*step)
+                fighter_arena.print(f"{attacker.name} shoves {defender.name} into the {tile_type.name}!")
+                defender.take_damage(tile_type.damage)
+            
         else:
             fighter_arena.print(f"{attacker.name} fails to move {defender.name}!")
     except Exception as e:
