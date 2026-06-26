@@ -29,7 +29,7 @@ class Tile:
         self.fg = fg
         self.bg = bg
         self.walk_cost = walk_cost
-        self.damage = 0
+        self.damage = damage
 
 
 class Arena:

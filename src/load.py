@@ -34,7 +34,7 @@ def load_tiles(arena_folder_path: str):
 
 
 def load_tile(filename: str, json_text: str):
-    json_dict = json.loads(json_text)
+    json_dict: dict = json.loads(json_text)
 
     import arena
 
@@ -43,7 +43,7 @@ def load_tile(filename: str, json_text: str):
         try:
             damage = json_dict["damage"]
         except:
-            damage = 0 if walk_cost != 0 else 2
+            damage = 2 if walk_cost == 0 else 0
         return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], walk_cost, damage)
     except:
         return None

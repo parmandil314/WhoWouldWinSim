@@ -19,6 +19,8 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
                     defender.pos = attacker_pos
                 else:
                     fighter_arena.print(f"{attacker.name} shoves {defender.name}!")
+                    defender_pos = (defender.pos[0], defender.pos[1])
+                    attacker.pos = defender_pos
                     defender.pos = step
                     return
             else:
