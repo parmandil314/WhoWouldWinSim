@@ -1,7 +1,6 @@
 import fighter
 from arena import Arena
 
-import tcod
 
 def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter):
 
