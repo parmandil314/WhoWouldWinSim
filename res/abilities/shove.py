@@ -7,8 +7,8 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
     try:
         if dice.roll_maneuver(attacker, defender, "brawl"):
             path = fighter_arena.nearest_wall(*defender.pos)
-            step = path[1]
-            if len(path) > 2:
+            step = path[0]
+            if len(path) > 1:
 
                 a_present = attacker.pos[0] == step[0] and attacker.pos[1] == step[1]
                 if a_present:
@@ -22,7 +22,6 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
                     defender.pos = step
                     return
             else:
-
                 tile_type = fighter_arena.tile_type(*step)
                 fighter_arena.print(f"{attacker.name} shoves {defender.name} into the {tile_type.name}!")
                 defender.take_damage(tile_type.damage)
