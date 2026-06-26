@@ -1,6 +1,6 @@
 {
-    "name": "Test Stander",
-    "char": "S",
+    "name": "Punching Bag",
+    "char": "P",
     "is_character": true,
     "hp": 10,
     "build": 0,
@@ -16,12 +16,10 @@
         "POW": 50,
         "SIZ": 50
     },
-    "skills": {
-        "dodge": 25
-    },
+    "skills": {},
     "abilities": [
         "none"
     ],
-    "dodge_if": "defender.hp < defender.hp // 2",
-    "choose_ability_func": "stander_choose.py"
+    "dodge_if": "False",
+    "choose_ability_func": "punching_bag_choose.py"
 }

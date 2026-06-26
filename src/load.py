@@ -111,17 +111,18 @@ def load_fighters() -> list[fighter.Fighter]:
     
     abilities = load_abilities()
     fighters = []
-    for entry in os.listdir("res/fighters"):
-        if entry.endswith(".json"):
-            with open(f"res/fighters/{entry}", "r") as f:
-                new_fighter = load_fighter(f.read(), abilities)
-                if new_fighter is not None:
-                    fighters.append(new_fighter)
-
+    for possible_folder in Path("res/fighters").iterdir():
+        if possible_folder.is_dir():
+            for entry in possible_folder.iterdir():
+                if entry.name.endswith(".json"):
+                    with entry.resolve().open() as f:
+                        new_fighter = load_fighter(f.read(), possible_folder, abilities)
+                        if new_fighter is not None:
+                            fighters.append(new_fighter)
     return fighters
 
 
-def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
+def load_fighter(json_text: str, dir: Path, abilities: dict) -> fighter.Fighter | None:
 
     json_dict: dict = json.loads(json_text)
     
@@ -142,7 +143,7 @@ def load_fighter(json_text: str, abilities: dict) -> fighter.Fighter | None:
         for name in json_dict["abilities"]:
             new_fighter.abilities[name] = abilities[name]
 
-        with open(f"res/fighters/{json_dict["choose_ability_func"]}", "r") as f:
+        with open(f"{dir}/{json_dict["choose_ability_func"]}", "r") as f:
             local_namespace = {}
             try:
                 exec(f.read(), GLOBALS, local_namespace)
