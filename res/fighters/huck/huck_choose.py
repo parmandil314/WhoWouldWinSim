@@ -13,11 +13,11 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
         case "normal":
             if not self.in_range(target):
                 return "move"
-            return "punch"
+            return "attack"
         case "careful":
             if self.in_range(target) and self.tiles_moved == self.move_rate - 1:
                 return "move_away"
             elif self.in_range(target) and self.tiles_moved < self.move_rate - 1:
-                return "punch"
+                return "attack"
             else:
                 return "move"

@@ -1,9 +1,28 @@
 import time
 import tcod
+import dice
 
 
 def default_choose_ability(arena, attacker, target) -> str:
     return "none"
+
+
+class Weapon:
+    def __init__(self, name: str, skill: str, num_attacks: int, weapon_range: int, num_dice: int, dice_sides: int, modifier: int = 0) -> None:
+        self.name = name
+        self.skill = skill
+        self.num_attacks = num_attacks
+        self.range = weapon_range
+        self.num_dice = num_dice
+        self.dice_sides = dice_sides
+        self.modifier = modifier
+    
+
+    def roll_damage(self):
+        return dice.roll(self.num_dice, self.dice_sides, self.modifier)
+
+    
+DEFAULT_MELEE_WEAPON = Weapon("Fists", "brawl", 1, 0, 1, 3)
 
 
 class Fighter:
@@ -27,6 +46,9 @@ class Fighter:
         self.build = 0
         self.db = 0
         self.armor = 0 # damage -= armor
+
+        self.weapons: dict[str, Weapon] = {}
+        self.equipped_weapon: None | Weapon = None
 
         self.abilities = {}
         self.choose_ability = default_choose_ability

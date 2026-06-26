@@ -3,5 +3,6 @@
     "char": ".",
     "fg": [150, 150, 150],
     "bg": [50, 50, 50],
-    "walk_cost": 1
+    "walk_cost": 1,
+    "is_opaque": true
 }

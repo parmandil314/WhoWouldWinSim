@@ -1,0 +1,9 @@
+{
+    "name": "revolver",
+    "skill": "handguns",
+    "num_attacks": 1,
+    "range": 15,
+    "num_dice": 1,
+    "dice_sides": 6,
+    "modifier": 0
+}

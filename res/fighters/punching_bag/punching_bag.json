@@ -20,6 +20,7 @@
     "abilities": [
         "none"
     ],
+    "weapons": [],
     "dodge_if": "False",
     "choose_ability_func": "punching_bag_choose.py"
 }

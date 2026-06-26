@@ -21,8 +21,9 @@
         "dodge": 40
     },
     "abilities": [
-        "punch", "move", "move_away"
+        "attack", "move", "move_away"
     ],
+    "weapons": [],
     "dodge_if": "defender.hp < 8",
     "choose_ability_func": "huck_choose.py"
 }

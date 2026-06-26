@@ -20,8 +20,9 @@
         "dodge": 25
     },
     "abilities": [
-        "punch", "move", "move_away", "shove"
+        "attack", "move", "move_away", "shove"
     ],
+    "weapons": [],
     "dodge_if": "defender.hp < 5",
     "choose_ability_func": "nick_choose.py"
 }

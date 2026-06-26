@@ -107,22 +107,44 @@ def load_ability(python_text: str):
         return None
 
 
+def load_weapons():
+
+    weapons: dict[str, fighter.Weapon] = {}
+    for entry in Path("res/weapons").iterdir():
+        if entry.name.endswith(".json"):
+            with entry.open() as f:
+                new_weapon = load_weapon(f.read())
+            if new_weapon is not None:
+                weapons[new_weapon.name] = new_weapon
+    return weapons
+
+
+def load_weapon(json_text: str):
+    json_dict: dict = json.loads(json_text)
+    try:
+        return fighter.Weapon(json_dict["name"], json_dict["skill"], json_dict["num_attacks"], json_dict["range"],
+                            json_dict["num_dice"], json_dict["dice_sides"], json_dict["modifier"])
+    except:
+        return None
+
+
 def load_fighters() -> list[fighter.Fighter]:
     
     abilities = load_abilities()
+    weapons = load_weapons()
     fighters = []
     for possible_folder in Path("res/fighters").iterdir():
         if possible_folder.is_dir():
             for entry in possible_folder.iterdir():
                 if entry.name.endswith(".json"):
                     with entry.resolve().open() as f:
-                        new_fighter = load_fighter(f.read(), possible_folder, abilities)
+                        new_fighter = load_fighter(f.read(), possible_folder, abilities, weapons)
                         if new_fighter is not None:
                             fighters.append(new_fighter)
     return fighters
 
 
-def load_fighter(json_text: str, dir: Path, abilities: dict) -> fighter.Fighter | None:
+def load_fighter(json_text: str, dir: Path, abilities: dict, weapons: dict) -> fighter.Fighter | None:
 
     json_dict: dict = json.loads(json_text)
     
@@ -134,6 +156,7 @@ def load_fighter(json_text: str, dir: Path, abilities: dict) -> fighter.Fighter 
             new_fighter.char = char
         
         new_fighter.hp = json_dict["hp"]
+        new_fighter.max_hp = int(new_fighter.hp)
         new_fighter.build = json_dict["build"]
         new_fighter.db = json_dict["db"]
         new_fighter.armor = json_dict["armor"]
@@ -142,6 +165,9 @@ def load_fighter(json_text: str, dir: Path, abilities: dict) -> fighter.Fighter 
 
         for name in json_dict["abilities"]:
             new_fighter.abilities[name] = abilities[name]
+        
+        for name in json_dict["weapons"]:
+            new_fighter.weapons[name] = weapons[name]
 
         with open(f"{dir}/{json_dict["choose_ability_func"]}", "r") as f:
             local_namespace = {}

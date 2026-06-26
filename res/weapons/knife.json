@@ -1,0 +1,9 @@
+{
+    "name": "knife",
+    "skill": "brawl",
+    "num_attacks": 1,
+    "range": 0,
+    "num_dice": 1,
+    "dice_sides": 4,
+    "modifier": 0
+}

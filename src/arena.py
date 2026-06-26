@@ -22,13 +22,15 @@ class Message:
 
 
 class Tile:
-    def __init__(self, name: str, filename: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], walk_cost: float, damage: int = 0) -> None:
+    def __init__(self, name: str, filename: str, char: str, fg: tuple[int, int, int], bg: tuple[int, int, int], 
+                 walk_cost: float, damage: int = 0, is_opaque = False) -> None:
         self.name = name
         self.filename = filename
         self.char = char
         self.fg = fg
         self.bg = bg
         self.walk_cost = walk_cost
+        self.is_opaque = is_opaque
         self.damage = damage
 
 
@@ -162,3 +164,11 @@ class Arena:
         pathfinder.add_root(start)
         path: np.ndarray = pathfinder.path_to(end)
         return path.tolist()
+
+
+    def in_los(self, start: tuple[int, int], end: tuple[int, int]):
+        line = tcod.los.bresenham(start, end).tolist()
+        for point in line:
+            if self.tile_type(*point).is_opaque:
+                return False
+        return True

@@ -22,6 +22,7 @@
     "abilities": [
         "move", "shove"
     ],
+    "weapons": [],
     "dodge_if": "defender.hp < defender.hp // 2",
     "choose_ability_func": "shover_choose.py"
 }

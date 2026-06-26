@@ -7,6 +7,5 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
 
     if not self.in_range(target) and self.tiles_moved <= self.move_rate:
         return "move"
-    elif self.in_range(target) and self.hp < self.max_hp // 2:
-        return "shove"
-    return "punch"
+    elif self.in_range(target):
+        return "attack"
