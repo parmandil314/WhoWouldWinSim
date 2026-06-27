@@ -5,7 +5,7 @@ import tcod
 def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     
     try:        
-        costs = [[int(arena.tile_type(x, y).walk_cost) for x in range(arena.width)] for y in range(arena.height)]
+        costs = [[int(arena.tile_type(y, x).walk_cost) for x in range(arena.width)] for y in range(arena.height)]
         pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=10, diagonal=14))
         pathfinder.add_root(defender.pos)
 

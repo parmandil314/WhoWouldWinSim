@@ -177,7 +177,7 @@ class Arena:
 
     
     def nearest_wall(self, start_x, start_y):
-        costs = [[int(self.tile_type(x, y).walk_cost) for x in range(self.width)] for y in range(self.height)]
+        costs = [[int(self.tile_type(y, x).walk_cost) for x in range(self.width)] for y in range(self.height)]
         pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=10, diagonal=14))
         for y in range(self.height):
             for x in range(self.width):
@@ -188,7 +188,7 @@ class Arena:
     
 
     def shortest_path(self, start, end) -> list:
-        costs = [[int(self.tile_type(x, y).walk_cost) for x in range(self.width)] for y in range(self.height)]
+        costs = [[int(self.tile_type(y, x).walk_cost) for x in range(self.width)] for y in range(self.height)]
         pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=10, diagonal=14))
         pathfinder.add_root((start[0], start[1]))
         path: np.ndarray = pathfinder.path_to((end[0], end[1]))

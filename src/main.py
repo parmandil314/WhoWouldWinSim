@@ -74,6 +74,7 @@ class Scene:
             self.fighter_arena.MESSAGE_LOG_MAX_LEN = self.fighter_arena.console.height - self.fighter_arena.height
 
             fighting = False
+            finished = False
             fighter_a_turn = True
             while True:
 
@@ -85,22 +86,21 @@ class Scene:
                             self.fighter_arena.file.close()
                             raise SystemExit
                         elif event.sym.keysym == tcod.event.KeySym.SPACE:
-                            if not fighting:
-                                fighting = True
+                            if not finished:
+                                fighting = not fighting
 
                 if fighting:
-                    self.fighter_arena.clear()
-                    self.fighter_arena.draw(self.fighter_a, self.fighter_b)
                     if fighter_a_turn:
-                        self.fighter_a.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_b)
+                        self.fighter_a.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_b, True)
                         if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
                             fighting = False
+                            finished = True
                     else:
-                        self.fighter_b.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_a)
+                        self.fighter_b.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_a, False)
                         if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
                             fighting = False
+                            finished = True
                     fighter_a_turn = not fighter_a_turn
-                    self.fighter_arena.present()
                 else:
                     self.fighter_arena.clear()
                     self.fighter_arena.draw(self.fighter_a, self.fighter_b)

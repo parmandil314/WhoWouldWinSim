@@ -110,11 +110,16 @@ class Fighter:
         return False
 
 
-    def take_turn(self, scene, context, console, opponent):
+    def take_turn(self, scene, context, console, opponent, a):
 
         self.action_taken = False
         self.tiles_moved = 0
         while self.tiles_moved <= self.move_rate:
+            self.arena.clear()
+            if a:
+                self.arena.draw(self, opponent)
+            else:
+                self.arena.draw(opponent, self)
             time.sleep(0.15)
             ability_choice = self.choose_ability(self.arena, self, opponent)
             if ability_choice == "end_turn":
@@ -125,6 +130,7 @@ class Fighter:
             elif ability_choice in ("move", "move_away"):
                 self.use_ability(self.arena, ability_choice, opponent)
                 self.tiles_moved += 1
+            self.arena.present()
 
 
     def use_ability(self, arena, name: str, target):
