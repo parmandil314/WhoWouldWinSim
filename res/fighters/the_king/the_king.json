@@ -1,0 +1,28 @@
+{
+    "name": "The King",
+    "char": "K",
+    "is_character": true,
+    "hp": 10,
+    "build": 0,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 45,
+        "DEX": 50,
+        "CON": 55,
+        "EDU": 50,
+        "INT": 60,
+        "POW": 50,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 27
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove"
+    ],
+    "weapons": ["knife"],
+    "dodge_if": "defender.hp < 5",
+    "choose_ability_func": "king_choose.py"
+}
