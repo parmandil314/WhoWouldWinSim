@@ -2,6 +2,8 @@ import fighter
 import arena
 import tcod
 
+import traceback
+
 def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     
     try:        
@@ -13,8 +15,8 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
         for direction in arena.DIRECTIONS:
             dx, dy = direction
             step = (
-                max(0, attacker.pos[0] + dx),
-                max(0, attacker.pos[1] + dy),
+                min(max(0, attacker.pos[0] + dx), 9),
+                min(max(0, attacker.pos[1] + dy), 9),
             )
             lengths.append((direction, len(pathfinder.path_to(step))))
         
@@ -22,4 +24,5 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
         next_step = best_path[0]
         attacker.move(defender, next_step[0] - attacker.pos[0], next_step[1] - attacker.pos[1])
     except Exception as e:
-        print(f"move_away.py: {e}")
+        print(f"move_away.py:")
+        traceback.print_exc()

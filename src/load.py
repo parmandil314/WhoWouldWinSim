@@ -2,6 +2,7 @@ import json
 import os
 import copy
 import random
+import traceback
 import numpy as np
 
 import tcod
@@ -21,6 +22,7 @@ GLOBALS = {
     "dice": dice,
     "fighter": fighter,
     "arena": arena,
+    "traceback": traceback
 }
 
 

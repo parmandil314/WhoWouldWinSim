@@ -74,15 +74,15 @@ class Arena:
                                         columns=self.console.width, rows=self.console.height, tileset=self.tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
         
             self.file = open(f"transcripts/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
-        
-        self.file = open(f"fight_data/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
 
 
     def print(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)):
+        
         self.message_log.append(Message(text, fg, bg))
-        print(text, file=self.file)
-        while len(self.message_log) > self.MESSAGE_LOG_MAX_LEN:
-            self.message_log.pop(0)
+
+        if not self.headless:
+            while len(self.message_log) > self.MESSAGE_LOG_MAX_LEN:
+                self.message_log.pop(0)
 
 
     def draw_log(self):
