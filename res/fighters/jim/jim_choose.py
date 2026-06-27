@@ -18,3 +18,4 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
             return "move"
         else:
             return "move_away"
+    return "move"

@@ -1,5 +1,6 @@
+import sys
+
 import tcod
-import time
 
 
 class Scene:
@@ -92,9 +93,9 @@ class Scene:
 
                 if fighting:
                     if fighter_a_turn:
-                        self.fighter_a.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_b, True)
+                        self.fighter_a.take_turn(self.fighter_b, True)
                     else:
-                        self.fighter_b.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_a, False)
+                        self.fighter_b.take_turn(self.fighter_a, False)
                     
                     a_tile = self.fighter_arena.tiles[self.fighter_a.pos[1]][self.fighter_a.pos[0]]
                     b_tile = self.fighter_arena.tiles[self.fighter_b.pos[1]][self.fighter_b.pos[0]]
@@ -115,5 +116,6 @@ class Scene:
 
 
 if __name__ == "__main__":
+
     scene = Scene()
     scene.fight()

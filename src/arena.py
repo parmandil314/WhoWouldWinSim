@@ -39,7 +39,7 @@ class Tile:
 
 class Arena:
 
-    def __init__(self, name: str, folder_path: str, width: int, height: int, editing=False, a_name="a", b_name="b") -> None:
+    def __init__(self, name: str, folder_path: str, width: int, height: int, headless=False, a_name="a", b_name="b") -> None:
 
         import load
 
@@ -66,13 +66,17 @@ class Arena:
 
         self.message_log: list[Message] = []
 
-        if not editing:
+        self.headless = headless
+        if not headless:
             self.tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
             self.console = tcod.console.Console(80, 50)
             self.context = tcod.context.new(title=f"Who Would Win",
                                         columns=self.console.width, rows=self.console.height, tileset=self.tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
+        
             self.file = open(f"transcripts/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
-    
+        
+        self.file = open(f"fight_data/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
+
 
     def print(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)):
         self.message_log.append(Message(text, fg, bg))
@@ -94,10 +98,15 @@ class Arena:
 
 
     def clear(self):
-        self.console.clear()
+
+        if not self.headless:
+            self.console.clear()
 
     
     def draw(self, fighter_a, fighter_b):
+
+        if self.headless:
+            return
             
         for (y, x), t in np.ndenumerate(self.tiles):
             
@@ -124,12 +133,14 @@ class Arena:
     
 
     def present(self):
-        self.context.present(
-            self.console, 
-            keep_aspect=True,
-            integer_scaling=True,
-            align=(0, 0)
-        )
+        
+        if not self.headless:
+            self.context.present(
+                self.console, 
+                keep_aspect=True,
+                integer_scaling=True,
+                align=(0, 0)
+            )
 
     
     def draw_path(self, path: list[tuple[int, int]]):
@@ -187,16 +198,27 @@ class Arena:
 
     
     def nearest_wall(self, start_x, start_y):
+        
         costs = [[int(self.tile_type(y, x).walk_cost) for x in range(self.width)] for y in range(self.height)]
-        pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=10, diagonal=14))
+
+        roots = []
         for y in range(self.height):
             for x in range(self.width):
                 if costs[y][x] == 0:
-                    pathfinder.add_root((x, y), 2)
-                elif costs[y][x] == -1:
-                    pathfinder.add_root((x, y), 5)
-        path: list[tuple[int, int]] = pathfinder.path_from((start_x, start_y))[1:].tolist()
-        return path
+                    roots.append(((x, y), 2))
+                    costs[y][x] = 1
+                elif costs[y][x] < 0:
+                    roots.append(((x, y), 5))
+                    costs[y][x] = 1
+
+        if len(roots) == 0:
+            return []
+        
+        pathfinder = tcod.path.Pathfinder(tcod.path.SimpleGraph(cost=costs, cardinal=10, diagonal=14))
+        for root in roots:
+            pathfinder.add_root(*root)
+        
+        return pathfinder.path_from((start_x, start_y))[1:].tolist()
     
 
     def shortest_path(self, start, end) -> list:

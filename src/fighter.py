@@ -1,4 +1,5 @@
 import time
+import traceback
 import tcod
 import dice
 
@@ -110,7 +111,7 @@ class Fighter:
         return False
 
 
-    def take_turn(self, scene, context, console, opponent, a):
+    def take_turn(self, opponent, a):
 
         self.action_taken = False
         self.tiles_moved = 0
@@ -120,7 +121,9 @@ class Fighter:
                 self.arena.draw(self, opponent)
             else:
                 self.arena.draw(opponent, self)
-            time.sleep(0.15)
+            
+            if not self.arena.headless:
+                time.sleep(0.15)
             ability_choice = self.choose_ability(self.arena, self, opponent)
             if ability_choice == "end_turn":
                 break
@@ -138,4 +141,5 @@ class Fighter:
         try:
             self.abilities[name](arena, self, target)
         except Exception as e:
-            print(f"fighter.py: {e}")
+            print(f"fighter.py:{self.name}")
+            traceback.print_exc()

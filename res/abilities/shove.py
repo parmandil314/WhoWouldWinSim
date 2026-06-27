@@ -1,3 +1,5 @@
+import random
+
 import fighter
 import arena
 import dice
@@ -7,7 +9,16 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
     try:
         if dice.roll_maneuver(attacker, defender, "brawl"):
             path = fighter_arena.nearest_wall(*defender.pos)
-            step = path[0]
+            if len(path) == 0:
+                d = random.choice(arena.DIRECTIONS)
+                dx, dy = d
+                step = (
+                    max(0, attacker.pos[0] + dx),
+                    max(0, attacker.pos[1] + dy),
+                )
+            else:
+                step = path[0]
+            
             if len(path) > 1:
 
                 a_present = attacker.pos[0] == step[0] and attacker.pos[1] == step[1]
@@ -29,4 +40,6 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
         else:
             fighter_arena.print(f"{attacker.name} fails to move {defender.name}!", (100, 100, 100))
     except Exception as e:
-        print(f"shove.py: {e}")
+        import traceback
+        print(f"shove.py:")
+        traceback.print_exc()

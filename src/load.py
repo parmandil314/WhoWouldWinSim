@@ -1,6 +1,7 @@
 import json
 import os
 import copy
+import random
 import numpy as np
 
 import tcod
@@ -14,11 +15,12 @@ from pathlib import Path
 
 
 GLOBALS = {
+    "random": random,
     "numpy": np,
     "tcod": tcod,
     "dice": dice,
     "fighter": fighter,
-    "arena": arena
+    "arena": arena,
 }
 
 
@@ -65,10 +67,10 @@ def load_arena_names() -> dict[str, str]:
     return names_dict
 
 
-def load_arena(filename: str, a_name: str, b_name: str) -> arena.Arena:
+def load_arena(filename: str, a_name: str, b_name: str, headless=False) -> arena.Arena:
     with open(filename, "r") as f:
         json_dict: dict = json.load(f)
-        new_arena = arena.Arena(json_dict["name"], str(Path(filename).resolve().parent), json_dict["width"], json_dict["height"], False, a_name, b_name)
+        new_arena = arena.Arena(json_dict["name"], str(Path(filename).resolve().parent), json_dict["width"], json_dict["height"], headless, a_name, b_name)
         
         a_start = json_dict.get("a_start")
         if a_start:

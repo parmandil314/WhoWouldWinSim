@@ -17,7 +17,7 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
             elif arena.distance(self.pos, target.pos) < 6:
                 return "move_away"
             else:
-                self.equipped_weapon = self.weapons["muzzle_loading_rifle"]
+                self.equipped_weapon = self.weapons["rifle"]
                 return "attack"
     else:
         if self.hp > self.max_hp // 2:
