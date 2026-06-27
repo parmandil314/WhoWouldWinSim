@@ -1,0 +1,28 @@
+{
+    "name": "Colonel Sherburn",
+    "char": "S",
+    "is_character": true,
+    "hp": 10,
+    "build": 0,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 50,
+        "DEX": 50,
+        "CON": 55,
+        "EDU": 60,
+        "INT": 50,
+        "POW": 50,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 27
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove"
+    ],
+    "weapons": ["muzzle_loading_rifle", "knife"],
+    "dodge_if": "defender.hp < 5",
+    "choose_ability_func": "sherburn_choose.py"
+}

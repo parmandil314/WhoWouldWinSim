@@ -1,0 +1,28 @@
+{
+    "name": "Jim",
+    "char": "J",
+    "is_character": true,
+    "hp": 10,
+    "build": 0,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 60,
+        "DEX": 55,
+        "CON": 55,
+        "EDU": 35,
+        "INT": 50,
+        "POW": 50,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 27
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove"
+    ],
+    "weapons": [],
+    "dodge_if": "defender.hp < 5",
+    "choose_ability_func": "jim_choose.py"
+}
