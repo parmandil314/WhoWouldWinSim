@@ -93,14 +93,20 @@ class Scene:
                 if fighting:
                     if fighter_a_turn:
                         self.fighter_a.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_b, True)
-                        if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
-                            fighting = False
-                            finished = True
                     else:
                         self.fighter_b.take_turn(self, self.fighter_arena.context, self.fighter_arena.console, self.fighter_a, False)
-                        if not self.fighter_a.is_alive or not self.fighter_b.is_alive:
-                            fighting = False
-                            finished = True
+                    
+                    a_tile = self.fighter_arena.tiles[self.fighter_a.pos[1]][self.fighter_a.pos[0]]
+                    b_tile = self.fighter_arena.tiles[self.fighter_b.pos[1]][self.fighter_b.pos[0]]
+                    if a_tile == -1:
+                        self.fighter_arena.print(f"{self.fighter_a.name} falls to their death!", (255, 0, 0))
+                    elif b_tile == -1:
+                        self.fighter_arena.print(f"{self.fighter_b.name} falls to their death!", (255, 0, 0))
+                    
+                    if a_tile == -1 or b_tile == -1 or not self.fighter_a.is_alive or not self.fighter_b.is_alive:
+                        fighting = False
+                        finished = True
+                    
                     fighter_a_turn = not fighter_a_turn
                 else:
                     self.fighter_arena.clear()

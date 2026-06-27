@@ -57,5 +57,5 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
                 arena.print(" ", (0, 0, 0))
             
         else:
-            arena.print(f"{attacker.name} fails to effectively hit {defender.name}, dealing no damage!", (100, 100, 100))
+            arena.print(f"{attacker.name} hits {defender.name} but deals no damage.", (100, 100, 100))
             arena.print(" ", (0, 0, 0))

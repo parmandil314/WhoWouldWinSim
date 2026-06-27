@@ -44,7 +44,7 @@ def load_tile(filename: str, json_text: str):
             damage = json_dict["damage"]
         except:
             damage = 2 if walk_cost == 0 else 0
-        return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], walk_cost, damage)
+        return arena.Tile(json_dict["name"], filename, json_dict["char"], json_dict["fg"], json_dict["bg"], walk_cost, damage, json_dict["is_opaque"])
     except:
         return None
 

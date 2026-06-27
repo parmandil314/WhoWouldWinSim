@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 
 import numpy as np
 import tcod
@@ -98,7 +99,12 @@ class Arena:
     
     def draw(self, fighter_a, fighter_b):
             
-        for (y, x), tile in np.ndenumerate(self.tiles):
+        for (y, x), t in np.ndenumerate(self.tiles):
+            
+            tile = int(t)
+            if tile < 0:
+                continue
+
             tile_type = self.tile_types[tile]
             self.console.fg[y][x] = tile_type.fg
 
@@ -140,7 +146,7 @@ class Arena:
         if fighter_a.pos == (x, y) or fighter_b.pos == (x, y):
             return False
         
-        return self.tile_type(x, y).walk_cost > 0.0
+        return self.tile_type(x, y).walk_cost > 0
 
 
     def is_wall(self, x, y):
@@ -186,7 +192,9 @@ class Arena:
         for y in range(self.height):
             for x in range(self.width):
                 if costs[y][x] == 0:
-                    pathfinder.add_root((x, y))
+                    pathfinder.add_root((x, y), 2)
+                elif costs[y][x] == -1:
+                    pathfinder.add_root((x, y), 5)
         path: list[tuple[int, int]] = pathfinder.path_from((start_x, start_y))[1:].tolist()
         return path
     
@@ -205,3 +213,12 @@ class Arena:
             if self.tile_type(*point).is_opaque:
                 return False
         return True
+    
+
+    def distance(self, start: tuple[int, int], end: tuple[int, int]):
+        s_x, s_y = start
+        e_x, e_y = end
+        return math.sqrt(
+            (e_x - s_x)*(e_x - s_x) +
+            (e_y - s_y)*(e_y - s_y)
+        )

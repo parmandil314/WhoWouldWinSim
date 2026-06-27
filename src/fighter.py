@@ -72,14 +72,14 @@ class Fighter:
             self.arena.print(f"{self.name} takes {mod_damage} damage!", (255, 0, 0))
 
         if self.hp > 0:
-            if self.hp < self.max_hp // 2:
-                self.arena.print(f"{self.name} looks unsteady!", (255, 255, 0))
-            elif self.hp < self.max_hp // 4:
+            if self.hp < self.max_hp // 4:
                 self.arena.print(f"{self.name} looks desperate!", (255, 0, 0))
+            elif self.hp < self.max_hp // 2:
+                self.arena.print(f"{self.name} looks unsteady!", (255, 255, 0))
         else:
             self.is_alive = False
             self.arena.print(f"{self.name} loses!", (255, 0, 0))
-    
+
 
     def move(self, other, dx, dy):
 
