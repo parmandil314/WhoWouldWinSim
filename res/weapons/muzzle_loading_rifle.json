@@ -1,0 +1,9 @@
+{
+    "name": "rifle",
+    "skill": "rifles",
+    "num_attacks": 1,
+    "range": 40,
+    "num_dice": 2,
+    "dice_sides": 4,
+    "modifier": 2
+}

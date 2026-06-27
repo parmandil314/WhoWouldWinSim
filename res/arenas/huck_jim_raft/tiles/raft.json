@@ -3,5 +3,6 @@
     "char": "#",
     "fg": [139, 69, 19],
     "bg": [0, 10, 75],
-    "walk_cost": 2
+    "walk_cost": 2,
+    "is_opaque": false
 }

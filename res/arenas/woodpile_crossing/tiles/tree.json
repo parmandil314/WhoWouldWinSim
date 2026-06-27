@@ -1,0 +1,8 @@
+{
+    "name": "Tree",
+    "char": "^",
+    "fg": [66, 105, 47],
+    "bg": [106, 74, 62],
+    "walk_cost": 0,
+    "is_opaque": true
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Cattails",
+    "char": "!",
+    "fg": [158, 162, 107],
+    "bg": [0, 100, 150],
+    "walk_cost": 2,
+    "is_opaque": false
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Woodpile",
+    "char": "=",
+    "fg": [193, 154, 107],
+    "bg": [106, 74, 62],
+    "walk_cost": 5,
+    "is_opaque": true
+}
