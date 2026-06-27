@@ -104,7 +104,7 @@ class Fighter:
 
     
     def in_range(self, other, range=0):
-        distance = len(tcod.los.bresenham(self.pos, other.pos))
+        distance = self.arena.distance(self.pos, other.pos)
         if distance <= 2 + range:
             return True
         return False

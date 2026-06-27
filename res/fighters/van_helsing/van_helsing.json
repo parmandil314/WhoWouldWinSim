@@ -1,0 +1,28 @@
+{
+    "name": "Van Helsing",
+    "char": "H",
+    "is_character": true,
+    "hp": 10,
+    "build": 0,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 50,
+        "DEX": 50,
+        "CON": 50,
+        "EDU": 85,
+        "INT": 65,
+        "POW": 65,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 25
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove", "holy_water", "crucifix"
+    ],
+    "weapons": ["knife", "revolver"],
+    "dodge_if": "defender.hp < 9",
+    "choose_ability_func": "van_helsing_choose.py"
+}

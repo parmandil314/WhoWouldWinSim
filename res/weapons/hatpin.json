@@ -1,0 +1,9 @@
+{
+    "name": "hatpin",
+    "skill": "brawl",
+    "num_attacks": 1,
+    "range": 0,
+    "num_dice": 1,
+    "dice_sides": 1,
+    "modifier": 0
+}

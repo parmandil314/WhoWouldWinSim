@@ -1,6 +1,6 @@
 {
-    "name": "Colonel Sherburn",
-    "char": "S",
+    "name": "Daisy",
+    "char": "D",
     "is_character": true,
     "hp": 10,
     "build": 0,
@@ -10,19 +10,19 @@
     "attributes": {
         "STR": 50,
         "DEX": 50,
-        "CON": 55,
-        "EDU": 60,
-        "INT": 50,
-        "POW": 50,
+        "CON": 50,
+        "EDU": 55,
+        "INT": 60,
+        "POW": 60,
         "SIZ": 50
     },
     "skills": {
-        "dodge": 27
+        "dodge": 25
     },
     "abilities": [
         "attack", "move", "move_away", "shove"
     ],
-    "weapons": ["rifle", "knife"],
-    "dodge_if": "defender.hp < 5",
-    "choose_ability_func": "sherburn_choose.py"
+    "weapons": ["hatpin"],
+    "dodge_if": "defender.hp < 7",
+    "choose_ability_func": "daisy_choose.py"
 }

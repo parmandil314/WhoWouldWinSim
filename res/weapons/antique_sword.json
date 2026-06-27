@@ -1,0 +1,9 @@
+{
+    "name": "antique sword",
+    "skill": "swords",
+    "num_attacks": 1,
+    "range": 0,
+    "num_dice": 1,
+    "dice_sides": 6,
+    "modifier": 1
+}

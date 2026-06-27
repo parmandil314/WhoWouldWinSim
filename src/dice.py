@@ -15,20 +15,25 @@ Skill roll, attack roll, etc.
 """
 def general_roll(fighter, skill, num_bonuses=0, num_penalties=0):
 
+    if skill in fighter.skills.keys():
+        val = fighter.skills[skill]
+    elif skill in fighter.attributes.keys():
+        val = fighter.attributes[skill]
+    else:
+        val = skills.DEFAULT_SKILLS[skill]
+
     result = roll(1, 100)
     for _ in range(num_bonuses):
         result -= roll(1, 10)
     for _ in range(num_penalties):
         result += roll(1, 10)
-    
-    skill_val = fighter.skills[skill] if skill in fighter.skills.keys() else skills.DEFAULT_SKILLS[skill]
 
     success = 0
-    if result <= skill_val // 5:
+    if result <= val // 5:
         success = 1
-    elif result <= skill_val // 2:
+    elif result <= val // 2:
         success = 2
-    elif result <= skill_val:
+    elif result <= val:
         success = 3
     
     return success

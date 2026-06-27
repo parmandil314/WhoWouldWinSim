@@ -14,7 +14,7 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
         else:
             if self.in_range(target):
                 return "shove"
-            elif len(tcod.los.bresenham(self.pos, target.pos)) < 6:
+            elif arena.distance(self.pos, target.pos) < 6:
                 return "move_away"
             else:
                 self.equipped_weapon = self.weapons["muzzle_loading_rifle"]
