@@ -1,0 +1,28 @@
+{
+    "name": "Frankenstein",
+    "char": "F",
+    "is_character": true,
+    "hp": 10,
+    "build": 0,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 50,
+        "DEX": 55,
+        "CON": 60,
+        "EDU": 85,
+        "INT": 80,
+        "POW": 50,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 25
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove"
+    ],
+    "weapons": ["scalpel", "revolver"],
+    "dodge_if": "defender.hp < 7",
+    "choose_ability_func": "frankenstein_choose.py"
+}

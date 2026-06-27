@@ -1,0 +1,28 @@
+{
+    "name": "Frankenstein's Monster",
+    "char": "M",
+    "is_character": true,
+    "hp": 21,
+    "build": 2,
+    "armor": 0,
+    "db": 3,
+    "move_rate": 3,
+    "attributes": {
+        "STR": 100,
+        "DEX": 80,
+        "CON": 110,
+        "EDU": 30,
+        "INT": 50,
+        "POW": 60,
+        "SIZ": 100
+    },
+    "skills": {
+        "dodge": 40
+    },
+    "abilities": [
+        "attack", "move", "move_away", "shove"
+    ],
+    "weapons": [],
+    "dodge_if": "defender.hp < 10",
+    "choose_ability_func": "monster_choose.py"
+}

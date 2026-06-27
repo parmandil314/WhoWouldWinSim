@@ -1,0 +1,8 @@
+{
+    "name": "Fireplace",
+    "char": "&",
+    "fg": [193, 55, 74],
+    "bg": [50, 50, 50],
+    "walk_cost": 3,
+    "is_opaque": false
+}

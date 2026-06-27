@@ -48,12 +48,12 @@ class Arena:
         self.a_start: tuple[int, int] = (0, 0)
         self.b_start: tuple[int, int] = (width - 1, height - 1)
 
-        if 5 <= width <= 30:
+        if 5 <= width:
             self.width = width
         else:
             self.width = 10
         
-        if 5 <= height <= 30:
+        if 5 <= height:
             self.height = height
         else:
             self.height = 10
@@ -156,7 +156,7 @@ class Arena:
 
 
     def remove_tile_at(self, x, y):
-        self.tiles[y][x] = 0
+        self.tiles[y][x] = -1
 
 
     def change_tile_at(self, x, y, name):
@@ -168,11 +168,15 @@ class Arena:
 
     def tile_name_at(self, x, y):
         tile = self.tiles[y][x]
+        if tile == -1:
+            return "Empty Air"
         return self.tile_types[tile].name
 
 
     def tile_char_at(self, x, y):
         tile = self.tiles[y][x]
+        if tile == -1:
+            return (ord(" "), (0, 0, 0), (0, 0, 0))
         return (ord(self.tile_types[tile].char), self.tile_types[tile].fg, self.tile_types[tile].bg)
 
     
