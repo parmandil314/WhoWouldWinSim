@@ -1,0 +1,8 @@
+{
+    "name": "Bed",
+    "char": "#",
+    "fg": [150, 150, 150],
+    "bg": [49, 19, 0],
+    "walk_cost": 8,
+    "is_opaque": false
+}

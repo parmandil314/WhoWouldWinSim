@@ -1,0 +1,8 @@
+{
+    "name": "Water",
+    "char": "~",
+    "fg": [0, 150, 200],
+    "bg": [0, 100, 150],
+    "walk_cost": 9,
+    "is_opaque": false
+}

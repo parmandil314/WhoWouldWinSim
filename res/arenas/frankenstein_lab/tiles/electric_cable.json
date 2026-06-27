@@ -1,0 +1,8 @@
+{
+    "name": "Electric Cable",
+    "char": "&",
+    "fg": [150, 150, 150],
+    "bg": [50, 50, 50],
+    "walk_cost": 2,
+    "is_opaque": false
+}

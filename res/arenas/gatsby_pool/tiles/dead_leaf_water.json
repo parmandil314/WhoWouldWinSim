@@ -1,0 +1,8 @@
+{
+    "name": "Water Full of Dead Leaves",
+    "char": "~",
+    "fg": [106, 74, 62],
+    "bg": [0, 100, 150],
+    "walk_cost": 10,
+    "is_opaque": false
+}

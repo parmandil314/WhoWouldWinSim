@@ -1,0 +1,8 @@
+{
+    "name": "Operating Table",
+    "char": "O",
+    "fg": [150, 150, 150],
+    "bg": [50, 50, 50],
+    "walk_cost": 5,
+    "is_opaque": false
+}

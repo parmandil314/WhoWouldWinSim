@@ -292,17 +292,16 @@ def render_terrain_change_choices(x: int, y: int, terrain_names: list[str], sele
     console.clear()
 
     console.print(1, 1, "Editing terrain at (" + str(x) + ", " + str(y) + "):")
-    console.print(5, 5, "TERRAIN:")
 
     for i, name in enumerate(terrain_names):
         if name == selected_terrain and name == set_terrain:
-            console.print(5, 6 + i, "> " + name, bg=(0, 0, 255))
+            console.print(2, 3 + i, "> " + name, bg=(0, 0, 255))
         elif name == selected_terrain:
-            console.print(5, 6 + i, "> " + name)
+            console.print(2, 3 + i, "> " + name)
         elif name == set_terrain:
-            console.print(5, 6 + i, name, bg=(0, 0, 255))
+            console.print(2, 3 + i, name, bg=(0, 0, 255))
         else:
-            console.print(5, 6 + i, name)
+            console.print(2, 3 + i, name)
     
     context.present(console, keep_aspect=True, integer_scaling=True)
 
