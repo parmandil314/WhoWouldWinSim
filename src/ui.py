@@ -124,6 +124,7 @@ def new_map(name: str, arena_dir: str, arena_path: str, context: tcod.context.Co
                         height += 1
             render_dim_selection(context, console, width, height)
     
+
     def render_terrain_selection(terrain_type: str, context: tcod.context.Context, console: tcod.console.Console, terrain_list: list[str], selected_name: str, set_name: str):
 
         console.clear()
@@ -189,7 +190,7 @@ def new_map(name: str, arena_dir: str, arena_path: str, context: tcod.context.Co
         elif j == 1:
             default_wall = selected_index
 
-    a = arena.Arena(name, arena_dir, width, height)
+    a = arena.Arena(name, arena_dir, width, height, True)
     for y in range(height):
         for x in range(width):
             if x == 0 or y == 0 or x == width - 1 or y == height - 1:
@@ -350,7 +351,6 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
     render_map(map_to_edit, mouse_x, mouse_y, mouse_diff_x, mouse_diff_y, context, console)
 
     while True:
-        context.present(console, keep_aspect=True, integer_scaling=True)
         for e in tcod.event.wait():
             event = context.convert_event(e)
             if isinstance(event, tcod.event.Quit):
@@ -362,7 +362,7 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
                         mouse_diff_x = 1
                         mouse_diff_y = 1
                     else:
-                        return None
+                        return
                 elif event.sym.keysym == tcod.event.KeySym.LSHIFT:
                     if not toggle:
                         toggle = True
@@ -432,6 +432,7 @@ def edit_map_data(map: arena.Arena, context: tcod.context.Context, console: tcod
                 elif event.sym.keysym == tcod.event.KeySym.B:
                     map.b_start = (mouse_x, mouse_y)
             render_map(map_to_edit, int(mouse_x), int(mouse_y), mouse_diff_x, mouse_diff_y, context, console)
+
 
 def save_map_data(map: arena.Arena) -> None:
     with open(f"{map.folder}/{map.name}.json", "w") as file:

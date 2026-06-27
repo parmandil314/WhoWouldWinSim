@@ -68,7 +68,7 @@ def load_arena_names() -> dict[str, str]:
 def load_arena(filename: str, a_name: str, b_name: str) -> arena.Arena:
     with open(filename, "r") as f:
         json_dict: dict = json.load(f)
-        new_arena = arena.Arena(json_dict["name"], str(Path(filename).resolve().parent), json_dict["width"], json_dict["height"], a_name, b_name)
+        new_arena = arena.Arena(json_dict["name"], str(Path(filename).resolve().parent), json_dict["width"], json_dict["height"])
         
         a_start = json_dict.get("a_start")
         if a_start:

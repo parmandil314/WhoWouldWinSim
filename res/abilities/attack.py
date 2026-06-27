@@ -9,7 +9,7 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     if weapon is None:
         unarmed = True
         weapon = fighter.DEFAULT_MELEE_WEAPON
-        
+    
     if not attacker.in_range(defender, weapon.range):
         return
 

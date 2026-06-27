@@ -25,10 +25,6 @@ tileset = tcod.tileset.load_tilesheet(
 
 map_name = sys.argv[1]
 map_dir = f"res/arenas/{sys.argv[2].lower().replace(".", "").replace("'", "").replace(" ", "_")}"
-dir_path = Path(map_dir)
-if not dir_path.exists():
-    dir_path.mkdir()
-    Path(map_dir + "/tiles").mkdir()
 
 map_data = None
 if map_name not in maps.keys():

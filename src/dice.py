@@ -7,7 +7,7 @@ def roll(num_dice: int, sides: int, modifier: int = 0):
 
     if sides == 0:
         return 0
-    return sum(random.randint(1, sides) for _ in range(num_dice)) + modifier
+    return sum([random.randint(1, sides) for _ in range(num_dice)]) + modifier
 
 
 """

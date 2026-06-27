@@ -1,0 +1,28 @@
+{
+    "name": "Test Shooter",
+    "char": "S",
+    "is_character": true,
+    "hp": 10,
+    "build": 1,
+    "armor": 0,
+    "db": 0,
+    "move_rate": 2,
+    "attributes": {
+        "STR": 50,
+        "DEX": 50,
+        "CON": 50,
+        "EDU": 50,
+        "INT": 50,
+        "POW": 50,
+        "SIZ": 50
+    },
+    "skills": {
+        "dodge": 25
+    },
+    "abilities": [
+        "move", "move_away", "attack"
+    ],
+    "weapons": ["revolver"],
+    "dodge_if": "defender.hp < defender.hp // 2",
+    "choose_ability_func": "shooter_choose.py"
+}

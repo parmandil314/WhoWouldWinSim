@@ -38,7 +38,7 @@ class Tile:
 
 class Arena:
 
-    def __init__(self, name: str, folder_path: str, width: int, height: int, a_name: str, b_name: str) -> None:
+    def __init__(self, name: str, folder_path: str, width: int, height: int, editing=False, a_name="a", b_name="b") -> None:
 
         import load
 
@@ -65,12 +65,12 @@ class Arena:
 
         self.message_log: list[Message] = []
 
-        self.tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
-        self.console = tcod.console.Console(80, 50)
-        self.context = tcod.context.new(title=f"Who Would Win",
-                                       columns=self.console.width, rows=self.console.height, tileset=self.tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
-
-        self.file = open(f"transcripts/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
+        if not editing:
+            self.tileset = tcod.tileset.load_tilesheet("res/cp437.png", 16, 16, charmap=tcod.tileset.CHARMAP_CP437)
+            self.console = tcod.console.Console(80, 50)
+            self.context = tcod.context.new(title=f"Who Would Win",
+                                        columns=self.console.width, rows=self.console.height, tileset=self.tileset, sdl_window_flags=int(tcod.context.SDL_WINDOW_FULLSCREEN))
+            self.file = open(f"transcripts/{a_name} vs. {b_name} in {self.name}: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}", "w", encoding="utf-8")
     
 
     def print(self, text: str, fg: tuple[int, int, int] = (255, 255, 255), bg: tuple[int, int, int] = (0, 0, 0)):

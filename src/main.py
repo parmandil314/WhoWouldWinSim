@@ -84,6 +84,7 @@ class Scene:
                     elif isinstance(event, tcod.event.KeyDown):
                         if event.sym.keysym == tcod.event.KeySym.ESCAPE:
                             self.fighter_arena.file.close()
+                            self.fighter_arena.context.close()
                             raise SystemExit
                         elif event.sym.keysym == tcod.event.KeySym.SPACE:
                             if not finished:

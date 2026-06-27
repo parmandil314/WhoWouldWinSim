@@ -1,0 +1,8 @@
+{
+    "name": "Floor",
+    "char": ".",
+    "fg": [255, 255, 255],
+    "bg": [0, 0, 0],
+    "walk_cost": 1,
+    "is_opaque": false
+}
