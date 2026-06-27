@@ -110,19 +110,20 @@ class Fighter:
         return False
 
 
-    def take_turn(self, scene, arena, context, console, opponent):
+    def take_turn(self, scene, context, console, opponent):
 
         self.action_taken = False
         self.tiles_moved = 0
         while self.tiles_moved <= self.move_rate:
-            scene.draw(context, console)
             time.sleep(0.15)
-            ability_choice = self.choose_ability(arena, self, opponent)
-            if ability_choice not in ("move", "move_away") and not self.action_taken:
-                self.use_ability(arena, ability_choice, opponent)
+            ability_choice = self.choose_ability(self.arena, self, opponent)
+            if ability_choice == "end_turn":
+                break
+            elif ability_choice not in ("move", "move_away") and not self.action_taken:
+                self.use_ability(self.arena, ability_choice, opponent)
                 self.action_taken = True
             elif ability_choice in ("move", "move_away"):
-                self.use_ability(arena, ability_choice, opponent)
+                self.use_ability(self.arena, ability_choice, opponent)
                 self.tiles_moved += 1
 
 
@@ -131,4 +132,4 @@ class Fighter:
         try:
             self.abilities[name](arena, self, target)
         except Exception as e:
-            print(e)
+            print(f"fighter.py: {e}")

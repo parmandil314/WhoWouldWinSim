@@ -5,7 +5,9 @@ import dice
 def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):    
     
     weapon = attacker.equipped_weapon
+    unarmed = False
     if weapon is None:
+        unarmed = True
         weapon = fighter.DEFAULT_MELEE_WEAPON
         
     if not attacker.in_range(defender, weapon.range):
@@ -21,7 +23,10 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             if weapon.range == 0:
                 damage += attacker.db
 
-            arena.print(f"{attacker.name} hits {defender.name}!", (255, 0, 0))
+            if unarmed:
+                arena.print(f"{attacker.name} hits {defender.name}!", (255, 0, 0))
+            else:
+                arena.print(f"{attacker.name} hits {defender.name} with a {weapon.name}!", (255, 0, 0))
             defender.take_damage(damage)
             arena.print(" ", (0, 0, 0))
         elif defender_success <= attacker_success:
@@ -35,7 +40,10 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             damage = weapon.roll_damage()
             if weapon.range == 0:
                 damage += attacker.db
-            arena.print(f"{attacker.name} hits {defender.name}!", (255, 0, 0))
+            if unarmed:
+                arena.print(f"{attacker.name} hits {defender.name}!", (255, 0, 0))
+            else:
+                arena.print(f"{attacker.name} hits {defender.name} with a {weapon.name}!", (255, 0, 0))
             defender.take_damage(damage)
             arena.print(" ", (0, 0, 0))
         

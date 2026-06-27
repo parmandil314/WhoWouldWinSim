@@ -3,6 +3,8 @@ from arena import Arena
 
 def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter):
 
-    if not self.in_range(target):
-        return "move"
-    return "shove"
+    if self.in_range(target):
+        if self.action_taken:
+            return "end_turn"
+        return "shove"
+    return "move"
