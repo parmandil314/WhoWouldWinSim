@@ -7,10 +7,10 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     if defender.name != "Dracula":
         return
     
-    success = dice.general_roll(attacker, "DEX")
-    if success:
+    arena.print(f"{attacker.name} holds up a crucifix!", (255, 255, 0))
 
-        arena.print(f"{attacker.name} holds up their crucifix!", (0, 0, 255))
+    success = dice.general_roll(defender, "CON")
+    if success != 1:
         amount = int(defender.hp * 0.75)
         if attacker.max_hp < attacker.hp + amount:
             arena.print(f"{attacker.name} regains all their HP!", (0, 0, 255))
@@ -19,7 +19,7 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
             arena.print(f"{attacker.name} regains {amount} HP!", (0, 0, 255))
             attacker.hp += amount
         
-        arena.print(f"{defender.name} is burnt by the crucifix!", (0, 0, 255))
+        arena.print(f"{defender.name} is burned by the crucifix!", (0, 0, 255))
         defender.take_damage(amount)
     else:
-        arena.print(f"{defender.name} avoids a splash of holy water from {attacker.name}!", (255, 0, 0))
+        arena.print(f"{defender.name} somehow avoids being burned!", (255, 0, 0))
