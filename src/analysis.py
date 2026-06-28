@@ -7,7 +7,7 @@ import json
 
 plt.style.use('_mpl-gallery')
 
-# Fighter A name : B name, arena name, a_hp, b_hp
+# Fighter A name : B name, arena name, A HP, B HP
 matches: list[tuple[str, str, str, int, int]] = []
 
 for dir in Path("fight_data/").iterdir():
@@ -24,7 +24,6 @@ for dir in Path("fight_data/").iterdir():
 
 
 names = list(set([ m[0] for m in matches ] + [ m[1] for m in matches ]))
-
 
 def show_overall_wins():
     win_dict: dict[str, int] = {}
@@ -61,7 +60,7 @@ def show_overall_wins():
     plt.show()
 
 
-def show_individual_pairing(fighter_name: str):
+def show_individual_wins(fighter_name: str):
 
     win_scores: dict[str, int] = {}
     for name in names:
@@ -109,4 +108,4 @@ def show_individual_pairing(fighter_name: str):
 if sys.argv[1] == "overall":
     show_overall_wins()
 elif sys.argv[1] in names:
-    show_individual_pairing(sys.argv[1])
+    show_individual_wins(sys.argv[1])
