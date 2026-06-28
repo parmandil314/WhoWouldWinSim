@@ -2,8 +2,8 @@
     "name": "revolver",
     "skill": "handguns",
     "num_attacks": 1,
-    "range": 15,
+    "range": 10,
     "num_dice": 1,
-    "dice_sides": 6,
+    "dice_sides": 8,
     "modifier": 0
 }

@@ -2,27 +2,27 @@
     "name": "Dracula",
     "char": "D",
     "is_character": true,
-    "hp": 21,
-    "build": 2,
-    "armor": 0,
-    "db": 3,
-    "move_rate": 3,
+    "hp": 30,
+    "build": 1,
+    "armor": 3,
+    "db": 6,
+    "move_rate": 4,
     "attributes": {
-        "STR": 100,
-        "DEX": 80,
-        "CON": 110,
+        "STR": 150,
+        "DEX": 150,
+        "CON": 200,
         "EDU": 100,
         "INT": 65,
         "POW": 150,
-        "SIZ": 100
+        "SIZ": 60
     },
     "skills": {
         "dodge": 60, "brawl": 60, "swords": 60
     },
     "abilities": [
-        "attack", "move", "move_away", "shove", "bite"
+        "attack", "move", "move_away", "shove", "bite", "leap"
     ],
     "weapons": ["antique sword"],
-    "dodge_if": "defender.hp < 10",
+    "dodge_if": "defender.hp < 15",
     "choose_ability_func": "dracula_choose.py"
 }

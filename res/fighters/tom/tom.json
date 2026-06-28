@@ -8,9 +8,9 @@
     "db": 1,
     "move_rate": 2,
     "attributes": {
-        "STR": 65,
-        "DEX": 60,
-        "CON": 60,
+        "STR": 55,
+        "DEX": 55,
+        "CON": 55,
         "EDU": 65,
         "INT": 50,
         "POW": 65,
@@ -23,7 +23,7 @@
         "attack", "move", "move_away", "shove"
     ],
     "weapons": [
-        "revolver"
+        "knife"
     ],
     "dodge_if": "defender.hp < 5",
     "choose_ability_func": "tom_choose.py"

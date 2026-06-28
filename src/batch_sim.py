@@ -1,17 +1,18 @@
 import copy
 from pathlib import Path
 import sys
-from itertools import combinations, product
+import itertools
 import traceback
 
 import arena, load
 
 fighters = load.load_fighters()
 arena_paths = list(load.load_arena_names().values())
-pairs = list(combinations(fighters, 2))
-matches = list((pair, arena) for pair, arena in product(pairs, arena_paths))
 
-path = Path("./fight_data")
+pairs = itertools.combinations(fighters, 2)
+matches = list(itertools.product(pairs, arena_paths))
+
+path = Path("fight_data")
 dir_name = sum(1 for item in path.iterdir() if item.is_dir()) + 1
 Path(f"fight_data/{dir_name}").mkdir()
 
