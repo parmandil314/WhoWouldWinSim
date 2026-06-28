@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 
 plt.style.use('_mpl-gallery')
+plt.figure(figsize=(8, 8))
 
 # Fighter A name : B name, arena name, A HP, B HP
 matches: list[tuple[str, str, str, int, int]] = []
@@ -57,6 +58,8 @@ def show_overall_wins():
 
     plt.tight_layout()
     plt.xticks(rotation=45, ha='right')
+    
+    plt.savefig('results/overall.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
@@ -102,6 +105,8 @@ def show_individual_wins(fighter_name: str):
     plt.ylabel('Number of Wins/Losses', fontsize=12)
 
     plt.xticks(rotation=45, ha='right')
+
+    plt.savefig(f'results/{fighter_name}.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
