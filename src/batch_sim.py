@@ -14,6 +14,7 @@ for i in range(int(sys.argv[1])):
 
     for (a, b, arena_path) in matches:
 
+        a_turn = True
         try:
             fighter_a = copy.deepcopy(a)
             fighter_b = copy.deepcopy(b)
@@ -26,7 +27,6 @@ for i in range(int(sys.argv[1])):
             fighter_b.pos = arena.b_start
             fighter_b.arena = arena
 
-            a_turn = True
             fighting = True
             while fighting:
                 if a_turn:
@@ -49,6 +49,6 @@ for i in range(int(sys.argv[1])):
                 text = "{" + '"a_hp": ' + str(fighter_a.hp) + ', "b_hp": ' + str(fighter_b.hp) + "}"
                 print(text, file=f)
         except:
-            print(f"batch_sim: {a.name} vs. {b.name}")
+            print(f"batch_sim: {a.name} vs. {b.name} (currently {a.name if a_turn else b.name})")
             traceback.print_exc()
             raise SystemExit

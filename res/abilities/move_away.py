@@ -15,8 +15,8 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
         for direction in arena.DIRECTIONS:
             dx, dy = direction
             step = (
-                min(max(0, attacker.pos[0] + dx), 9),
-                min(max(0, attacker.pos[1] + dy), 9),
+                min(max(0, attacker.pos[0] + dx), fighter_arena.width - 1),
+                min(max(0, attacker.pos[1] + dy), fighter_arena.height - 1),
             )
             lengths.append((direction, len(pathfinder.path_to(step))))
         

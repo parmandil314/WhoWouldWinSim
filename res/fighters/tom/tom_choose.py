@@ -10,17 +10,11 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
             if self.in_range(target):
                 self.equipped_weapon = None
                 return "attack"
-            return "move"
         else:
-            if self.in_range(target):
-                return "shove"
-            elif arena.distance(self.pos, target.pos) < 4:
-                return "move_away"
-            else:
-                self.equipped_weapon = self.weapons["revolver"]
-                return "attack"
+            self.equipped_weapon = self.weapons["revolver"]
+            return "attack"
+
+    if self.hp > self.max_hp // 2:
+        return "move"
     else:
-        if self.hp > self.max_hp // 2:
-            return "move"
-        else:
-            return "move_away"
+        return "move_away"
