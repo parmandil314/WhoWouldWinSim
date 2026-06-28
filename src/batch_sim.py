@@ -8,8 +8,8 @@ import arena, load
 
 fighters = load.load_fighters()
 arena_paths = list(load.load_arena_names().values())
-pairs = combinations(fighters, 2)
-matches = [(*pair, path) for pair, path in product(pairs, arena_paths)]
+pairs = list(combinations(fighters, 2))
+matches = list((pair, arena) for pair, arena in product(pairs, arena_paths))
 
 path = Path("./fight_data")
 dir_name = sum(1 for item in path.iterdir() if item.is_dir()) + 1
@@ -17,7 +17,7 @@ Path(f"fight_data/{dir_name}").mkdir()
 
 for i in range(int(sys.argv[1])):
 
-    for (a, b, arena_path) in matches:
+    for ((a, b), arena_path) in matches:
 
         a_turn = True
         try:
