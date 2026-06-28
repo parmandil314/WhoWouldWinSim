@@ -1,4 +1,5 @@
 import copy
+from pathlib import Path
 import sys
 from itertools import combinations, product
 import traceback
@@ -9,6 +10,10 @@ fighters = load.load_fighters()
 arena_paths = list(load.load_arena_names().values())
 pairs = combinations(fighters, 2)
 matches = [(*pair, path) for pair, path in product(pairs, arena_paths)]
+
+path = Path("./fight_data")
+dir_name = sum(1 for item in path.iterdir() if item.is_dir()) + 1
+Path(f"fight_data/{dir_name}").mkdir()
 
 for i in range(int(sys.argv[1])):
 
@@ -45,7 +50,7 @@ for i in range(int(sys.argv[1])):
                 
                 a_turn = not a_turn
 
-            with open(f"fight_data/{fighter_a.name}:{fighter_b.name}:{arena.name}:{i}", "w", encoding="utf-8") as f:
+            with open(f"fight_data/{dir_name}/{fighter_a.name}:{fighter_b.name}:{arena.name}:{i}", "w", encoding="utf-8") as f:
                 text = "{" + '"a_hp": ' + str(fighter_a.hp) + ', "b_hp": ' + str(fighter_b.hp) + "}"
                 print(text, file=f)
         except:

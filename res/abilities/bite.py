@@ -11,6 +11,7 @@ def execute(arena: Arena, attacker: fighter.Fighter, defender: fighter.Fighter):
     defender_success = dice.general_roll(defender, "POW")
     if self_success > defender_success and self_success == 1:
         arena.print(f"{attacker.name} bites {defender.name}!", (255, 0, 0))
-        defender.take_damage(defender.hp // 2, False)
+        damage = defender.hp // 2
+        defender.take_damage(damage if damage > 0 else 1, False)
     else:
         arena.print(f"{defender.name} avoids being bitten by {attacker.name}!", (255, 0, 0))
