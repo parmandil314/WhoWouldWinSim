@@ -1,6 +1,5 @@
 import fighter
 from arena import Arena
-import tcod
 
 
 def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter):
@@ -17,6 +16,5 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
     else:
         if self.hp > self.max_hp // 2:
             return "move"
-        else:
-            return "move_away"
+        return "move_away"
     return "move"

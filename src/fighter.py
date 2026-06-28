@@ -56,7 +56,7 @@ class Fighter:
         self.skills: dict[str, int] = {}
         self.attributes: dict[str, int] = {}
 
-        self.dodge: str = "defender.hp < 50"
+        self.dodge: str = "defender.hp < 6"
 
         self.move_rate = 1
         self.tiles_moved = 0
@@ -102,6 +102,7 @@ class Fighter:
         new_pos = (self.pos[0] + mod_dx, self.pos[1] + mod_dy)
         if self.arena.is_walkable(self, other, *new_pos):
             self.pos = new_pos
+        self.tiles_moved += 1
 
     
     def in_range(self, other, range=0):
@@ -116,14 +117,14 @@ class Fighter:
         self.action_taken = False
         self.tiles_moved = 0
         while self.tiles_moved <= self.move_rate:
-            self.arena.clear()
-            if a:
-                self.arena.draw(self, opponent)
-            else:
-                self.arena.draw(opponent, self)
-            
+
             if not self.arena.headless:
-                time.sleep(0.15)
+                self.arena.clear()
+                if a:
+                    self.arena.draw(self, opponent)
+                else:
+                    self.arena.draw(opponent, self)
+            
             ability_choice = self.choose_ability(self.arena, self, opponent)
             if ability_choice == "end_turn":
                 break
@@ -133,7 +134,10 @@ class Fighter:
             elif ability_choice in ("move", "move_away"):
                 self.use_ability(self.arena, ability_choice, opponent)
                 self.tiles_moved += 1
-            self.arena.present()
+
+            if not self.arena.headless:
+                time.sleep(0.15)
+                self.arena.present()
 
 
     def use_ability(self, arena, name: str, target):

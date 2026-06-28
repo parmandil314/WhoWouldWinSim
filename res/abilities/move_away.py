@@ -21,8 +21,10 @@ def execute(fighter_arena: arena.Arena, attacker: fighter.Fighter, defender: fig
             lengths.append((direction, len(pathfinder.path_to(step))))
         
         best_path = sorted(lengths, key=lambda length_pair: length_pair[1], reverse=True)[0]
+        if len(best_path[0]) == 0:
+            return
         next_step = best_path[0]
         attacker.move(defender, next_step[0] - attacker.pos[0], next_step[1] - attacker.pos[1])
     except Exception as e:
-        print(f"move_away.py:")
+        print(f"move_away.py: {attacker.name}:")
         traceback.print_exc()

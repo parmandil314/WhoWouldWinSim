@@ -20,7 +20,6 @@ def choose_ability(arena: Arena, self: fighter.Fighter, target: fighter.Fighter)
                 self.equipped_weapon = self.weapons["rifle"]
                 return "attack"
     else:
-        if self.hp > self.max_hp // 2:
-            return "move"
-        else:
+        if self.hp < self.max_hp // 2:
             return "move_away"
+        return "move"
